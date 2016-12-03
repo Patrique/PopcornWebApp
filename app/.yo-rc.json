@@ -1,0 +1,15 @@
+{
+  "generator-angm": {
+    "modules": [
+      {
+        "name": "movie"
+      }
+    ],
+    "menu": [
+      {
+        "link": "movie",
+        "title": "Movie"
+      }
+    ]
+  }
+}

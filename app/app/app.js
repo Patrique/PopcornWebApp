@@ -13,7 +13,7 @@
 	angular.module('popcorn', [
 		'ngResource',
 		'ngAria',
-		 'ngMaterial',
+		'ngMaterial',
 		'ngMdIcons',
 		'ngCookies',
 		'ngAnimate',
@@ -23,7 +23,10 @@
 		'popular',
 		'trending',
 		'recent',
-		'infinite-scroll'
+		'infinite-scroll',
+		'movie',
+		'angular-imagefit',
+		'jkAngularRatingStars'
 	]);
 
 })();

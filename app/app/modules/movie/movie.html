@@ -1,0 +1,21 @@
+<div layout-fill>
+    <md-tabs ng-show="vm.loaded" layout-fill>
+        <md-tab label="Movie" layout-fill>
+            <md-content style="background: black;" layout-fill>
+                <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.background}}" style="opacity:0.5;">
+                <div style="position: absolute;" layout-fill layout="column" layout-align="space-around center">
+                    <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);" ng-src="{{ vm.movie.medium_cover_image }}">
+                    <div layout="column" layout-align="space-between center">
+                        <h2 style="color:white;text-align: center">{{ vm.movie.title }}</h2>
+     
+                        <jk-rating-stars max-rating="5" rating="vm.movie.rating" read-only="true">
+                        </jk-rating-stars>
+                    </div>
+                </div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+    <div ng-show="!vm.loaded" layout="row" layout-fill layout-align="center center">
+        <md-progress-circular md-diameter="96"></md-progress-circular>
+    </div>
+</div>

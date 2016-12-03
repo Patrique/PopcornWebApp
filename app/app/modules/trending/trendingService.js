@@ -20,7 +20,7 @@
 		function Trending ($resource) {
 			return {
 				getMovies: function(pageNumber){
-					return $resource('https://yts.ag/api/v2/list_movies.json').get({sort_by: 'download_count', page: pageNumber});
+					return $resource('https://yts.ag/api/v2/list_movies.json').get({sort_by: 'download_count', page: pageNumber, limit: '30'});
 				}
 			};
 		}

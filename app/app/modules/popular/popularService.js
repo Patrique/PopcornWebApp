@@ -20,7 +20,7 @@
     function PopularService($resource) {
         return {
             getMovies: function(pageNumber) {
-                return $resource('https://yts.ag/api/v2/list_movies.json').get({ sort_by: 'rating', page: pageNumber });
+                return $resource('https://yts.ag/api/v2/list_movies.json').get({ sort_by: 'rating', page: pageNumber, limit: '30' });
             }
         };
     }

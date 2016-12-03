@@ -16,8 +16,9 @@
     <link rel="apple-touch-icon" sizes="114x114" href="app/assets/images/apple-touch-icon-114x114.png" />
     <link rel="stylesheet" href="/app/assets/css/main.css">
     <!-- injector:css -->
-    <link rel="stylesheet" href="/src/bower_components/angular-material-icons/angular-material-icons.css">
-    <link rel="stylesheet" href="/src/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="/bower_components/angular-material-icons/angular-material-icons.css">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="/bower_components/angular-jk-rating-stars/dist/jk-rating-stars.min.css">
     <!-- endinjector -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -120,39 +121,48 @@
     </script>
     <!-- End templates -->
     <!-- injector:js -->
-    <script src="/src/bower_components/es5-shim/es5-shim.js"></script>
-    <script src="/src/bower_components/json3/lib/json3.min.js"></script>
-    <script src="/src/bower_components/angular/angular.js"></script>
-    <script src="/src/bower_components/angular-aria/angular-aria.js"></script>
-    <script src="/src/bower_components/angular-mocks/angular-mocks.js"></script>
-    <script src="/src/bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="/src/bower_components/angular-animate/angular-animate.js"></script>
-    <script src="/src/bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="/src/bower_components/angular-resource/angular-resource.js"></script>
-    <script src="/src/bower_components/angular-material-icons/angular-material-icons.min.js"></script>
-    <script src="/src/bower_components/angular-messages/angular-messages.js"></script>
-    <script src="/src/bower_components/angular-material/angular-material.js"></script>
-    <script src="/src/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="/src/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="/bower_components/es5-shim/es5-shim.js"></script>
+    <script src="/bower_components/json3/lib/json3.min.js"></script>
+    <script src="/bower_components/angular-imagefit/jquery-1.11.3.min.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.js"></script>
+    <script src="/bower_components/angular-mocks/angular-mocks.js"></script>
+    <script src="/bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="/bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="/bower_components/angular-material-icons/angular-material-icons.min.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.js"></script>
+    <script src="/bower_components/angular-material/angular-material.js"></script>
+    <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="/bower_components/angular-imagefit/image-scale.js"></script>
+    <script src="/bower_components/angular-imagefit/angular-imagefit.js"></script>
+    <script src="/bower_components/angular-jk-rating-stars/dist/jk-rating-stars.min.js"></script>
     <script src="/app/app.js"></script>
     <script src="/app/app.config.js"></script>
     <script src="/app/modules/home/homeModule.js"></script>
+    <script src="/app/modules/movie/movieModule.js"></script>
     <script src="/app/modules/popular/popularModule.js"></script>
     <script src="/app/modules/recent/recentModule.js"></script>
     <script src="/app/modules/trending/trendingModule.js"></script>
     <script src="/app/modules/home/homeRoute.js"></script>
+    <script src="/app/modules/movie/movieRoute.js"></script>
     <script src="/app/modules/popular/popularRoute.js"></script>
     <script src="/app/modules/recent/recentRoute.js"></script>
     <script src="/app/modules/trending/trendingRoute.js"></script>
     <script src="/app/modules/home/homeCtrl.js"></script>
     <script src="/app/modules/layouts/main-page/mainPageCtrl.js"></script>
     <script src="/app/modules/layouts/side-nav/sidenavCtrl.js"></script>
+    <script src="/app/modules/movie/imageOnLoadDirective.js"></script>
+    <script src="/app/modules/movie/movieCtrl.js"></script>
     <script src="/app/modules/popular/popularCtrl.js"></script>
     <script src="/app/modules/recent/recentCtrl.js"></script>
     <script src="/app/modules/trending/trendingCtrl.js"></script>
     <script src="/app/modules/home/homeService.js"></script>
     <script src="/app/modules/layouts/nav-bar/navBarService.js"></script>
     <script src="/app/modules/layouts/side-nav/sidenavService.js"></script>
+    <script src="/app/modules/movie/movieService.js"></script>
     <script src="/app/modules/popular/popularService.js"></script>
     <script src="/app/modules/recent/recentService.js"></script>
     <script src="/app/modules/trending/trendingService.js"></script>

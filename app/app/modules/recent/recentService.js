@@ -20,7 +20,7 @@
 		function Recent ($resource) {
 			return {
 				getMovies: function(pageNumber){
-					return $resource('https://yts.ag/api/v2/list_movies.json').get({sort_by: 'date_added', page: pageNumber});
+					return $resource('https://yts.ag/api/v2/list_movies.json').get({sort_by: 'date_added', page: pageNumber, limit: '30'});
 				}
 			};
 		}

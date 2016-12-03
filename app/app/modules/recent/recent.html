@@ -1,9 +1,14 @@
 <div class="md-padding" flex layout-sm="column" infinite-scroll-container="'.layout-container'" infinite-scroll="vm.paginate()">
-    <md-grid-list md-cols-xl="10" md-cols-lg="8" md-cols-xs="2" md-cols-gt-md="6" md-cols-md="4" md-cols-sm="2" md-gutter="12px" md-row-height="8:12">
-        <md-grid-tile ng-repeat="movie in vm.movies">
-            <img ng-src="{{movie.large_cover_image}}" layout-fill class="md-card-image" alt="{{ movie.title }}" >
-            <md-grid-tile-footer>
-                <h3>{{ movie.title }}</h3>
+    <md-grid-list md-cols-lg="6" md-cols-xs="2" md-cols-gt-md="6" md-cols-md="4" md-cols-sm="2" md-gutter="12px" md-row-height="8:12">
+        <md-grid-tile style="cursor: pointer;" ng-repeat="movie in vm.movies" ui-sref="home.movie({id: movie.id})" md-ink-ripple="#1565C0">
+            <img ng-src="{{movie.large_cover_image}}" layout-fill class="md-card-image" alt="{{ movie.title }}">
+            <md-grid-tile-footer style="background:rgba(0, 0, 0, 0.6) !important;">
+                <div layout="row" layout-align="space-between center" layout-fill>
+                    <h3 style="font-weight:bold;word-break:break-word;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;">{{ movie.title }}</h3>
+                    <md-button class="md-icon-button md-accent md-48" aria-label="Favorite">
+                        <md-icon md-font-set="material-icons" style="color:white;">favorite</md-icon>
+                    </md-button>
+                </div>
             </md-grid-tile-footer>
         </md-grid-tile>
     </md-grid-list>

@@ -33,7 +33,7 @@
         	vm.loading = false;
         });
 
-        vm.tabIndex = 'home.trending';
+        vm.tabIndex = $state.current.name;
         $rootScope.$on('$stateChangeSuccess', function(event, current) {
             vm.tabIndex = current.name;
         });
