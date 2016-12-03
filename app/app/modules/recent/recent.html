@@ -1,0 +1,10 @@
+<div class="md-padding" flex layout-sm="column" infinite-scroll-container="'.layout-container'" infinite-scroll="vm.paginate()">
+    <md-grid-list md-cols-xl="10" md-cols-lg="8" md-cols-xs="2" md-cols-gt-md="6" md-cols-md="4" md-cols-sm="2" md-gutter="12px" md-row-height="8:12">
+        <md-grid-tile ng-repeat="movie in vm.movies">
+            <img ng-src="{{movie.large_cover_image}}" layout-fill class="md-card-image" alt="{{ movie.title }}" >
+            <md-grid-tile-footer>
+                <h3>{{ movie.title }}</h3>
+            </md-grid-tile-footer>
+        </md-grid-tile>
+    </md-grid-list>
+</div>

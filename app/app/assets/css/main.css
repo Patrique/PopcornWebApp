@@ -1,0 +1,11 @@
+.md-subheader-inner {
+	padding: 0px !important;
+}
+
+._md-nav-bar-list {
+	display: flex;
+  	justify-content: center;
+}
+._md-nav-bar-list > li {
+  display: inline-block;
+}
