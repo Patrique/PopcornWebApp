@@ -13,7 +13,7 @@
         .module('movie')
         .controller('MovieCtrl', Movie);
 
-    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout'];
+    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', 'Hub'];
 
     /*
      * recommend
@@ -21,9 +21,10 @@
      * and bindable members up top.
      */
 
-    function Movie($stateParams, MovieService, $scope, $timeout) {
+    function Movie($stateParams, MovieService, $scope, $timeout, Hub) {
         /*jshint validthis: true */
         var vm = this;
+        var hub = Hub(Hub.defaultServer, 'PopcornHub');
         vm.movie = {};
         vm.loaded = false;
         MovieService.getMovie($stateParams.id).$promise.then(function(res) {

@@ -13,21 +13,15 @@
 		.module('popcorn')
 		.controller('HomeCtrl', Home);
 
-	Home.$inject = ['homeService'];
-
 	/*
 	* recommend
 	* Using function declarations
 	* and bindable members up top.
 	*/
 
-	function Home(homeService) {
+	function Home() {
 		/*jshint validthis: true */
 		var vm = this;
-		vm.title = "Hello, popcorn!";
-		vm.version = "1.0.0";
-		vm.listFeatures = homeService.getFeaturesList();
-
 	}
 
 })();

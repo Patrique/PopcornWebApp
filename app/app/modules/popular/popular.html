@@ -1,8 +1,8 @@
 <div class="md-padding" flex layout-sm="column" style="height: 100%;overflow: scroll;">
     <div infinite-scroll="vm.paginate()" infinite-scroll-parent>
         <md-grid-list md-cols-lg="6" md-cols-xs="2" md-cols-gt-md="6" md-cols-md="4" md-cols-sm="2" md-gutter="12px" md-row-height="8:12">
-            <md-grid-tile style="cursor: pointer;" ui-sref="home.movie({id: movie.id})" ng-repeat="movie in vm.movies" md-ink-ripple="#1565C0">
-                <img ng-src="{{movie.large_cover_image}}" layout-fill class="md-card-image" alt="{{ movie.title }}">
+            <md-grid-tile style="cursor: pointer;" ng-repeat="movie in vm.movies" md-ink-ripple="#1565C0">
+                <img ng-src="{{movie.large_cover_image}}" layout-fill class="md-card-image" alt="{{ movie.title }}" ui-sref="home.movie({id: movie.id})">
                 <md-grid-tile-footer style="background:rgba(0, 0, 0, 0.6) !important;">
                     <div layout="row" layout-align="space-between center" layout-fill>
                         <h3 style="font-weight:bold;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;">{{ movie.title }}</h3>

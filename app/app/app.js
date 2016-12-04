@@ -27,7 +27,8 @@
 		'movie',
 		'angular-imagefit',
 		'jkAngularRatingStars',
-		'youtube-embed'
+		'youtube-embed',
+		'SignalR'
 	]);
 
 })();

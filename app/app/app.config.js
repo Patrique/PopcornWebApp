@@ -16,7 +16,7 @@
         .run(runBlock);
     angular
         .module('infinite-scroll')
-        .value('THROTTLE_MILLISECONDS', 250)
+        .value('THROTTLE_MILLISECONDS', 1000);
 
     configure.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$mdThemingProvider'];
 
@@ -28,7 +28,7 @@
             .primaryPalette('orange')
             .dark();
         $urlRouterProvider
-            .otherwise('/popular');
+            .otherwise('/trending');
 
     }
 
