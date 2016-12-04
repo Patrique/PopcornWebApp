@@ -1,16 +1,46 @@
 <div layout-fill>
     <md-tabs ng-show="vm.loaded" layout-fill>
-        <md-tab label="Movie" layout-fill>
+        <md-tab label="Poster" layout-fill>
             <md-content style="background: black;" layout-fill>
                 <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.background}}" style="opacity:0.5;">
                 <div style="position: absolute;" layout-fill layout="column" layout-align="space-around center">
                     <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);" ng-src="{{ vm.movie.medium_cover_image }}">
                     <div layout="column" layout-align="space-between center">
                         <h2 style="color:white;text-align: center">{{ vm.movie.title }}</h2>
-     
                         <jk-rating-stars max-rating="5" rating="vm.movie.rating" read-only="true">
                         </jk-rating-stars>
                     </div>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Description" layout-fill>
+            <md-content style="background: black;" layout-fill>
+                <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.large_screenshot_image1}}" style="opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);">
+                <div style="position: absolute;padding:40px;" layout-fill layout="column" layout-align="space-around center">
+                    <div layout="column" layout-align="start start">
+                        <h3 style="color:white;">Description</h3>
+                        <span style="color:white;text-align: justify;text-justify: inter-word;">{{ vm.movie.description_full }}</span>
+                    </div>
+                    <div layout="column" layout-align="start start" style="width:100%;">
+                        <h3 style="color:white;">Genres</h3>
+                        <span style="color:white;text-align: justify;text-justify: inter-word;">{{ vm.movie.genre }}</span>
+                    </div>
+                    <div layout="column" layout-align="start start" style="width: 100%;">
+                        <h3 style="color:white;">MPA Rating</h3>
+                        <span style="color:white;text-align: justify;text-justify: inter-word;">{{ vm.movie.mpa_rating }}</span>
+                    </div>
+                    <div layout="row" layout-align="center center" style="width:100%;">
+                        <span style="color:white;">{{ vm.movie.year }}</span>
+                        <span style="color:white;margin:0px 10px;">&#8226;</span>
+                        <span style="color:white;">{{ vm.movie.runtime }} min</span>
+                    </div>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Trailer" layout-fill>
+            <md-content style="background: black;" layout-fill>
+                <div style="position: absolute;" layout-fill layout="column" layout-align="space-around center">
+                    <youtube-video video-id="vm.movie.yt_trailer_code"></youtube-video>
                 </div>
             </md-content>
         </md-tab>

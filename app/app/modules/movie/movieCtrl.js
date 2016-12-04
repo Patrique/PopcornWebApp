@@ -29,6 +29,7 @@
         MovieService.getMovie($stateParams.id).$promise.then(function(res) {
                 vm.movie = res.data.movie;
                 vm.movie.rating = Math.round(vm.movie.rating/2);
+                vm.movie.genre = vm.movie.genres.join(', ');
                 return MovieService.getTMDbInfo(vm.movie.imdb_code).$promise;
             }).then(function(res) {
               console.log(vm.movie);

@@ -26,7 +26,8 @@
 		'infinite-scroll',
 		'movie',
 		'angular-imagefit',
-		'jkAngularRatingStars'
+		'jkAngularRatingStars',
+		'youtube-embed'
 	]);
 
 })();
