@@ -13,7 +13,7 @@
         .module('movie')
         .controller('MovieCtrl', Movie);
 
-    Movie.$inject = ['$stateParams', 'MovieService', '$scope'];
+    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Movie($stateParams, MovieService, $scope) {
+    function Movie($stateParams, MovieService, $scope, $timeout) {
         /*jshint validthis: true */
         var vm = this;
         vm.movie = {};
