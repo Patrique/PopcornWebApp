@@ -52,10 +52,10 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "            <md-content style=\"background: black;min-height: 100%;\">\n" +
     "                <img imagefit imagefit-option=\"vm.check\" imageonload imgloaded=\"vm.imageLoaded()\" ng-src=\"{{vm.movie.background}}\" style=\"opacity:0.5;\">\n" +
     "                <div layout=\"column\" layout-align=\"space-around center\">\n" +
-    "                    <img style=\"border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;\" ng-src=\"{{ vm.movie.medium_cover_image }}\">\n" +
+    "                    <img style=\"border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;max-width: 40%;\" ng-src=\"{{ vm.movie.medium_cover_image }}\">\n" +
     "                    <div layout=\"column\" flex layout-align=\"space-between center\" style=\"margin-bottom:20px;margin-top:10px;z-index:1;\">\n" +
     "                        <h2 style=\"color:white;text-align: center\">{{ vm.movie.title }}</h2>\n" +
-    "                        <md-button class=\"md-raised md-primary\">Play</md-button>\n" +
+    "                        <md-button class=\"md-raised md-primary\" ng-click=\"vm.goToPlayer(vm.movie)\">Play</md-button>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </md-content>\n" +
@@ -127,12 +127,33 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('app/modules/player/player.html',
+    "<div layout=\"column\" flex>\n" +
+    "    <md-content style=\"background: black;min-height: 100%;\" flex layout-fill layout=\"column\" layout-align=\"center center\" ng-show=\"vm.loaded\">\n" +
+    "        <img imagefit imagefit-option=\"vm.check\" imageonload imgloaded=\"vm.imageLoaded()\" ng-src=\"{{vm.movie.background}}\" style=\"opacity:0.3;\">\n" +
+    "        <div layout=\"column\" layout-align=\"space-around center\" style=\"padding:40px;width:100%;\">\n" +
+    "            <div layout=\"column\" layout-align=\"center center\" style=\"z-index:1;width:100%;\">\n" +
+    "                <h1 class=\"md-display-3\" style=\"color: white;text-align: center;\">{{ vm.movie.title }}</h1>\n" +
+    "                <h2 class=\"md-display-1\" style=\"color:white;\">Buffering</h2>\n" +
+    "                <md-progress-linear style=\"max-width:50%;\" class=\"md-warn\" md-mode=\"buffer\" value=\"20\" md-buffer-value=\"30\"></md-progress-linear>\n" +
+    "                <h3 class=\"md-headline\" style=\"color:white;\">5%</h3>\n" +
+    "                <md-button class=\"md-accent\" ng-click=\"vm.goPrevious();\">Cancel</md-button>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </md-content>\n" +
+    "    <div ng-show=\"!vm.loaded\" layout=\"row\" flex layout-align=\"center center\">\n" +
+    "        <md-progress-circular md-diameter=\"96\"></md-progress-circular>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('app/modules/popular/popular.html',
     "<div class=\"md-padding\" flex layout-sm=\"column\" style=\"height: 100%;overflow: scroll;\">\n" +
     "    <div infinite-scroll=\"vm.paginate()\" infinite-scroll-parent>\n" +
     "        <md-grid-list md-cols-lg=\"6\" md-cols-xs=\"2\" md-cols-gt-md=\"6\" md-cols-md=\"4\" md-cols-sm=\"2\" md-gutter=\"12px\" md-row-height=\"8:12\">\n" +
     "            <md-grid-tile style=\"cursor: pointer;\" ng-repeat=\"movie in vm.movies\" md-ink-ripple=\"#1565C0\">\n" +
-    "                <img ng-src=\"{{movie.large_cover_image}}\" layout-fill class=\"md-card-image\" alt=\"{{ movie.title }}\" ui-sref=\"home.movie({id: movie.id})\">\n" +
+    "                <img ng-src=\"{{movie.large_cover_image}}\" layout-fill class=\"md-card-image\" alt=\"{{ movie.title }}\" ui-sref=\"home.movie({id: movie.id, slug: movie.slug})\">\n" +
     "                <md-grid-tile-footer style=\"background:rgba(0, 0, 0, 0.6) !important;\">\n" +
     "                    <div layout=\"row\" layout-align=\"space-between center\" layout-fill>\n" +
     "                        <h3 style=\"font-weight:bold;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;\">{{ movie.title }}</h3>\n" +
@@ -153,7 +174,7 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "    <div infinite-scroll=\"vm.paginate()\" infinite-scroll-parent>\n" +
     "        <md-grid-list md-cols-lg=\"6\" md-cols-xs=\"2\" md-cols-gt-md=\"6\" md-cols-md=\"4\" md-cols-sm=\"2\" md-gutter=\"12px\" md-row-height=\"8:12\">\n" +
     "            <md-grid-tile style=\"cursor: pointer;\" ng-repeat=\"movie in vm.movies\" md-ink-ripple=\"#1565C0\">\n" +
-    "                <img ng-src=\"{{movie.large_cover_image}}\" layout-fill class=\"md-card-image\" alt=\"{{ movie.title }}\" ui-sref=\"home.movie({id: movie.id})\">\n" +
+    "                <img ng-src=\"{{movie.large_cover_image}}\" layout-fill class=\"md-card-image\" alt=\"{{ movie.title }}\" ui-sref=\"home.movie({id: movie.id, slug: movie.slug})\">\n" +
     "                <md-grid-tile-footer style=\"background:rgba(0, 0, 0, 0.6) !important;\">\n" +
     "                    <div layout=\"row\" layout-align=\"space-between center\" layout-fill>\n" +
     "                        <h3 style=\"font-weight:bold;word-break:break-word;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;\">{{ movie.title }}</h3>\n" +
@@ -174,7 +195,7 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "    <div infinite-scroll=\"vm.paginate()\" infinite-scroll-parent>\n" +
     "        <md-grid-list md-cols-lg=\"6\" md-cols-xs=\"2\" md-cols-gt-md=\"6\" md-cols-md=\"4\" md-cols-sm=\"2\" md-gutter=\"12px\" md-row-height=\"8:12\">\n" +
     "            <md-grid-tile style=\"cursor: pointer;\" ng-repeat=\"movie in vm.movies\" md-ink-ripple=\"#1565C0\">\n" +
-    "                <img ng-src=\"{{movie.large_cover_image}}\" layout-fill class=\"md-card-image\" alt=\"{{ movie.title }}\" ui-sref=\"home.movie({id: movie.id})\">\n" +
+    "                <img ng-src=\"{{movie.large_cover_image}}\" layout-fill class=\"md-card-image\" alt=\"{{ movie.title }}\" ui-sref=\"home.movie({id: movie.id, slug: movie.slug})\">\n" +
     "                <md-grid-tile-footer style=\"background:rgba(0, 0, 0, 0.6) !important;\">\n" +
     "                    <div layout=\"row\" layout-align=\"space-between center\" layout-fill>\n" +
     "                        <h3 style=\"font-weight:bold;word-break:break-word;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;\">{{ movie.title }}</h3>\n" +
