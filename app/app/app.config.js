@@ -36,6 +36,15 @@
 
     function runBlock($rootScope) {
         'use strict';
+        $rootScope.previousParams;
+        $rootScope.previousState;
+        $rootScope.currentState;
+
+        $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+            $rootScope.previousParams = fromParams;
+            $rootScope.previousState = from.name;
+            $rootScope.currentState = to.name;
+        });
     }
 
 
