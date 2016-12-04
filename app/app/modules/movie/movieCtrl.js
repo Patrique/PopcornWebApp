@@ -33,6 +33,7 @@
                 return MovieService.getTMDbInfo(vm.movie.imdb_code).$promise;
             }).then(function(res) {
                 vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
+                console.log(vm.movie);
             })
             .catch(function(err) {
                 vm.loaded = true;

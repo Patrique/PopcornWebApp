@@ -1,19 +1,19 @@
 <div layout="column" flex>
     <md-tabs ng-show="vm.loaded" layout="column" flex layout-fill>
         <md-tab label="Movie" layout="column" flex>
-            <md-content style="background: black;">
+            <md-content style="background: black;min-height: 100%;">
                 <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.background}}" style="opacity:0.5;">
                 <div layout="column" layout-align="space-around center">
                     <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;" ng-src="{{ vm.movie.medium_cover_image }}">
                     <div layout="column" flex layout-align="space-between center" style="margin-bottom:20px;margin-top:10px;z-index:1;">
                         <h2 style="color:white;text-align: center">{{ vm.movie.title }}</h2>
-                        <md-button class="md-accent">Play</md-button>
+                        <md-button class="md-raised md-primary">Play</md-button>
                     </div>
                 </div>
             </md-content>
         </md-tab>
         <md-tab label="Description" layout="column" flex>
-            <md-content style="background: black;">
+            <md-content style="background: black;min-height: 100%;">
                 <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.large_screenshot_image1}}" style="opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);">
                 <div layout="column" layout-align="space-around center" style="padding:40px;">
                     <div layout="column" layout-align="start start" style="z-index:1;">
@@ -28,20 +28,46 @@
                         <h3 style="color:white;">MPA Rating</h3>
                         <span style="color:white;text-align: justify;text-justify: inter-word;">{{ vm.movie.mpa_rating }}</span>
                     </div>
-                    <div layout="row" layout-align="center center" style="width:100%;z-index:1;">
+                    <div layout="row" layout-align="center center" style="width:100%;z-index:1;margin-top:15px;">
                         <span style="color:white;">{{ vm.movie.year }}</span>
                         <span style="color:white;margin:0px 10px;">&#8226;</span>
                         <span style="color:white;">{{ vm.movie.runtime }} min</span>
                     </div>
-                    <jk-rating-stars max-rating="5" rating="vm.movie.rating" read-only="true" style="z-index:1;">
+                    <jk-rating-stars max-rating="5" rating="vm.movie.rating" read-only="true" style="z-index:1;margin-top:15px;">
                     </jk-rating-stars>
                 </div>
             </md-content>
         </md-tab>
         <md-tab label="Trailer" layout="column" flex>
-            <md-content style="background: black;">
-                <div layout="column" layout-align="space-around center">
+            <md-content style="background: black;" layout="column" layout-align="center center" layout-fill>
+                <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.large_screenshot_image2}}" style="opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);">
+                <div layout="column" layout-align="space-around center" style="z-index:1;">
                     <youtube-video video-id="vm.movie.yt_trailer_code"></youtube-video>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Cast" layout="column" flex>
+            <md-content style="background: black;min-height: 100%;">
+
+                <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.large_screenshot_image3}}" style="opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);">
+                <div layout="column" layout-fill layout-align="space-around center" style="z-index:1;">
+                    <md-list style="margin:40px;">
+                        <md-list-item class="md-2-line" ng-repeat="actor in vm.movie.cast">
+                            <md-card md-colors="::{backgroundColor: 'default-primary-700'}" style="width:100%;">
+                                <md-card-title>
+                                    <md-card-title-media ng-if="actor.url_small_image !== undefined">
+                                        <div class="md-media-sm card-media" layout>
+                                            <img ng-src="{{actor.url_small_image}}">
+                                        </div>
+                                    </md-card-title-media>
+                                    <md-card-title-text>
+                                        <span class="md-headline">{{actor.name}}</span>
+                                        <span class="md-subhead description">{{actor.character_name}}</span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                            </md-card>
+                        </md-list-item>
+                    </md-list>
                 </div>
             </md-content>
         </md-tab>
