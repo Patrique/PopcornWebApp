@@ -28,11 +28,10 @@
         vm.loaded = false;
         MovieService.getMovie($stateParams.id).$promise.then(function(res) {
                 vm.movie = res.data.movie;
-                vm.movie.rating = Math.round(vm.movie.rating/2);
+                vm.movie.rating = Math.round(vm.movie.rating / 2);
                 vm.movie.genre = vm.movie.genres.join(', ');
                 return MovieService.getTMDbInfo(vm.movie.imdb_code).$promise;
             }).then(function(res) {
-              console.log(vm.movie);
                 vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
             })
             .catch(function(err) {
@@ -42,6 +41,9 @@
         vm.imageLoaded = function() {
             $scope.$apply(function() {
                 vm.loaded = true;
+                $timeout(function() {
+                    $(window).trigger('resize');
+                }, 500);
             });
         }
 

@@ -1,14 +1,13 @@
 <div layout-fill>
     <md-tabs ng-show="vm.loaded" layout-fill>
-        <md-tab label="Poster" layout-fill>
+        <md-tab label="Movie" layout-fill>
             <md-content style="background: black;" layout-fill>
                 <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.background}}" style="opacity:0.5;">
                 <div style="position: absolute;" layout-fill layout="column" layout-align="space-around center">
                     <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);" ng-src="{{ vm.movie.medium_cover_image }}">
                     <div layout="column" layout-align="space-between center">
                         <h2 style="color:white;text-align: center">{{ vm.movie.title }}</h2>
-                        <jk-rating-stars max-rating="5" rating="vm.movie.rating" read-only="true">
-                        </jk-rating-stars>
+                        <md-button class="md-accent">Play</md-button>
                     </div>
                 </div>
             </md-content>
@@ -34,6 +33,8 @@
                         <span style="color:white;margin:0px 10px;">&#8226;</span>
                         <span style="color:white;">{{ vm.movie.runtime }} min</span>
                     </div>
+                    <jk-rating-stars max-rating="5" rating="vm.movie.rating" read-only="true">
+                    </jk-rating-stars>
                 </div>
             </md-content>
         </md-tab>
