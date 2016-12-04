@@ -26,7 +26,7 @@
 
     function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
 
-        $locationProvider.hashPrefix('!');
+        $locationProvider.html5Mode(true);
 
         $mdThemingProvider.theme('docs-dark', 'default')
             .primaryPalette('orange')

@@ -137,6 +137,8 @@ module.exports = function(grunt) {
                         'app/assets/libs/angular-youtube-mb/angular-youtube-embed.js',
                         'app/assets/libs/signalr/jquery.signalR.js',
                         'app/assets/libs/angular-signalr-hub/signalr-hub.js',
+                        'app/assets/libs/azure/MobileServices.Web-1.2.5.min.js',
+                        'app/assets/libs/azure/angular-azure-mobile-service.min.js',
                         'app/app.js',
                         'app/app.config.js',
                         'app/**/*Module.js',

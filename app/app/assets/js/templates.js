@@ -45,6 +45,37 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('app/modules/login/login.html',
+    "<div layout=\"column\" layout-align=\"space-around center\" style=\"background-color: #3F51B5;\" layout-fill>\n" +
+    "    <div layout=\"column\" layout-align=\"center center\">\n" +
+    "        <img src=\"/app/assets/images/logo.png\" height=\"97\" width=\"97\">\n" +
+    "        <h2 class=\"md-display-1\" style=\"color:white;\">Popcorn</h2>\n" +
+    "        <h3 class=\"md-subhead\" style=\"color:white;margin: 0;\">Watch any movie instantly</h3>\n" +
+    "    </div>\n" +
+    "    <div layout=\"column\" layout-align=\"center center\">\n" +
+    "        <md-button class=\"md-raised\" style=\"background-color:#3b5998;color:white;width:100%;\" ng-click=\"vm.authenticate('facebook')\">\n" +
+    "            <span layout=\"row\" layout-align=\"space-between center\">\n" +
+    "            <md-icon md-svg-src=\"/app/assets/images/facebook.svg\" style=\"color:white;margin:0;\"></md-icon>\n" +
+    "            Sign in with Facebook\n" +
+    "            </span>\n" +
+    "        </md-button>\n" +
+    "        <md-button class=\"md-raised\" style=\"background-color:#d34836;color:white;width:100%;\" ng-click=\"vm.authenticate('google')\">\n" +
+    "            <span layout=\"row\" layout-align=\"space-between center\">\n" +
+    "            <md-icon md-svg-src=\"/app/assets/images/google.svg\" style=\"color:white;margin:0;\"></md-icon>\n" +
+    "            Sign in with Google</span></md-button>\n" +
+    "        <md-button class=\"md-raised\" style=\"background-color:#4099FF;color:white;width:100%;\" ng-click=\"vm.authenticate('twitter')\">\n" +
+    "            <span layout=\"row\" layout-align=\"space-between center\">\n" +
+    "            <md-icon md-svg-src=\"/app/assets/images/twitter.svg\" style=\"color:white;margin:0;\"></md-icon>\n" +
+    "            Sign in with Twitter</span></md-button>\n" +
+    "        <md-button class=\"md-raised\" style=\"background-color:#00a1f1;color:white;width:100%;\" ng-click=\"vm.authenticate('microsoftaccount')\">\n" +
+    "            <span layout=\"row\" layout-align=\"space-between center\">\n" +
+    "            <md-icon md-svg-src=\"/app/assets/images/microsoft.svg\" style=\"color:white;margin:0;\"></md-icon>\n" +
+    "            Sign in with Windows Live</span></md-button>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
+
   $templateCache.put('app/modules/movie/movie.html',
     "<div layout=\"column\" flex>\n" +
     "    <md-tabs ng-show=\"vm.loaded\" layout=\"column\" flex layout-fill>\n" +
@@ -55,7 +86,14 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "                    <img style=\"border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;max-width: 40%;\" ng-src=\"{{ vm.movie.medium_cover_image }}\">\n" +
     "                    <div layout=\"column\" flex layout-align=\"space-between center\" style=\"margin-bottom:20px;margin-top:10px;z-index:1;\">\n" +
     "                        <h2 style=\"color:white;text-align: center\">{{ vm.movie.title }}</h2>\n" +
-    "                        <md-button class=\"md-raised md-primary\" ng-click=\"vm.goToPlayer(vm.movie)\">Play</md-button>\n" +
+    "                        <div layout=\"row\" layout-align=\"center center\" style=\"width:100%;z-index:1;\">\n" +
+    "                            <span style=\"color:white;\">{{ vm.movie.year }}</span>\n" +
+    "                            <span style=\"color:white;margin:0px 10px;\">&#8226;</span>\n" +
+    "                            <span style=\"color:white;\">{{ vm.movie.runtime }} min</span>\n" +
+    "                        </div>\n" +
+    "                        <jk-rating-stars max-rating=\"5\" rating=\"vm.movie.rating\" read-only=\"true\" style=\"z-index:1;margin-top:5px;\">\n" +
+    "                        </jk-rating-stars>\n" +
+    "                        <md-button class=\"md-raised md-primary\" ng-click=\"vm.goToPlayer(vm.movie)\" style=\"margin-top:15px;\">Play</md-button>\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "            </md-content>\n" +
@@ -64,25 +102,18 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "            <md-content style=\"background: black;min-height: 100%;\">\n" +
     "                <img imagefit imagefit-option=\"vm.check\" imageonload imgloaded=\"vm.imageLoaded()\" ng-src=\"{{vm.movie.large_screenshot_image1}}\" style=\"opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);\">\n" +
     "                <div layout=\"column\" layout-align=\"space-around center\" style=\"padding:40px;\">\n" +
-    "                    <div layout=\"column\" layout-align=\"start start\" style=\"z-index:1;\">\n" +
+    "                    <div layout=\"column\" layout-align=\"start center\" style=\"z-index:1;\">\n" +
     "                        <h3 style=\"color:white;\">Description</h3>\n" +
     "                        <span style=\"color:white;text-align: justify;text-justify: inter-word;\">{{ vm.movie.description_full }}</span>\n" +
     "                    </div>\n" +
-    "                    <div layout=\"column\" layout-align=\"start start\" style=\"width:100%;z-index:1;\">\n" +
+    "                    <div layout=\"column\" layout-align=\"start center\" style=\"width:100%;z-index:1;\">\n" +
     "                        <h3 style=\"color:white;\">Genres</h3>\n" +
-    "                        <span style=\"color:white;text-align: justify;text-justify: inter-word;\">{{ vm.movie.genre }}</span>\n" +
+    "                        <span style=\"color:white;text-align: center;\">{{ vm.movie.genre }}</span>\n" +
     "                    </div>\n" +
-    "                    <div layout=\"column\" layout-align=\"start start\" style=\"width: 100%;z-index:1;\">\n" +
+    "                    <div layout=\"column\" layout-align=\"start center\" style=\"width: 100%;z-index:1;\">\n" +
     "                        <h3 style=\"color:white;\">MPA Rating</h3>\n" +
-    "                        <span style=\"color:white;text-align: justify;text-justify: inter-word;\">{{ vm.movie.mpa_rating }}</span>\n" +
+    "                        <span style=\"color:white;text-align: center;\">{{ vm.movie.mpa_rating }}</span>\n" +
     "                    </div>\n" +
-    "                    <div layout=\"row\" layout-align=\"center center\" style=\"width:100%;z-index:1;margin-top:15px;\">\n" +
-    "                        <span style=\"color:white;\">{{ vm.movie.year }}</span>\n" +
-    "                        <span style=\"color:white;margin:0px 10px;\">&#8226;</span>\n" +
-    "                        <span style=\"color:white;\">{{ vm.movie.runtime }} min</span>\n" +
-    "                    </div>\n" +
-    "                    <jk-rating-stars max-rating=\"5\" rating=\"vm.movie.rating\" read-only=\"true\" style=\"z-index:1;margin-top:15px;\">\n" +
-    "                    </jk-rating-stars>\n" +
     "                </div>\n" +
     "            </md-content>\n" +
     "        </md-tab>\n" +
@@ -96,7 +127,6 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "        </md-tab>\n" +
     "        <md-tab label=\"Cast\" layout=\"column\" flex>\n" +
     "            <md-content style=\"background: black;min-height: 100%;\">\n" +
-    "\n" +
     "                <img imagefit imagefit-option=\"vm.check\" imageonload imgloaded=\"vm.imageLoaded()\" ng-src=\"{{vm.movie.large_screenshot_image3}}\" style=\"opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);\">\n" +
     "                <div layout=\"column\" layout-fill layout-align=\"space-around center\" style=\"z-index:1;\">\n" +
     "                    <md-list style=\"margin:40px;\">\n" +
