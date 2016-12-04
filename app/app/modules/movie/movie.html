@@ -4,7 +4,7 @@
             <md-content style="background: black;min-height: 100%;">
                 <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.background}}" style="opacity:0.5;">
                 <div layout="column" layout-align="space-around center">
-                    <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;" ng-src="{{ vm.movie.medium_cover_image }}">
+                    <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;width:20%;" ng-src="{{ vm.movie.medium_cover_image }}">
                     <div layout="column" flex layout-align="space-between center" style="margin-bottom:20px;margin-top:10px;z-index:1;">
                         <h2 style="color:white;text-align: center">{{ vm.movie.title }}</h2>
                         <md-button class="md-raised md-primary" ng-click="vm.goToPlayer(vm.movie)">Play</md-button>
