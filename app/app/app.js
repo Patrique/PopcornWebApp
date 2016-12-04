@@ -30,7 +30,9 @@
 		'youtube-embed',
 		'SignalR',
 		'player',
-		'underscore'
+		'underscore',
+		'login',
+		'azure-mobile-service.module'
 	]);
 
 })();
