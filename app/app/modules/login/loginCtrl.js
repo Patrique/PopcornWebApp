@@ -13,7 +13,7 @@
         .module('login')
         .controller('LoginCtrl', Login);
 
-    Login.$inject = ['LoginService', 'Azureservice'];
+    Login.$inject = ['LoginService', 'Azureservice', '$state'];
 
     /*
      * recommend
@@ -21,13 +21,14 @@
      * and bindable members up top.
      */
 
-    function Login(LoginService, Azureservice) {
+    function Login(LoginService, Azureservice, $state) {
         /*jshint validthis: true */
         var vm = this;
         vm.authenticate = function(provider) {
-            Azureservice.login('provider')
+            Azureservice.login(provider)
                 .then(function() {
                     console.log('Login successful');
+                    $state.go('home.trending');
                 }, function(err) {
                     console.error('Azure Error: ' + err);
                 });
