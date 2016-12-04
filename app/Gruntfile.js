@@ -5,27 +5,10 @@ module.exports = function(grunt) {
 
     // Project configuration.
     grunt.initConfig({
-
         pkg: grunt.file.readJSON('package.json'),
-        banner: '/*!\n' +
-            '* <%= pkg.name %> - v<%= pkg.version %> - MIT LICENSE <%= grunt.template.today("yyyy-mm-dd") %>. \n' +
-            '* @author <%= pkg.author %>\n' +
-            '*/\n',
 
         clean: {
             dist: ['src']
-        },
-
-        jshint: {
-            options: {
-                jshintrc: '.jshintrc'
-            },
-            gruntfile: {
-                src: 'Gruntfile.js'
-            },
-            app: {
-                src: ['app/modules/**/*.js']
-            }
         },
 
         exec: {
@@ -33,10 +16,6 @@ module.exports = function(grunt) {
         },
 
         concat: {
-            options: {
-                banner: '<%= banner %>',
-                stripBanners: false
-            },
             base: {
                 src: [
                     // Angular Project Dependencies,
@@ -48,27 +27,48 @@ module.exports = function(grunt) {
                     'app/modules/**/*Service.js',
                     'app/modules/**/*Directive.js'
                 ],
-                dest: 'app/assets/js/<%= pkg.name %>-appbundle.js'
+                dest: 'app/assets/js/<%= pkg.name %>-appbundle.min.js'
             },
             build: {
                 src: [
-                    // Angular Project Dependencies,
+                    'app/assets/libs/angular-imagefit/jquery-1.11.3.min.js',
+                    'app/assets/libs/es5-shim/es5-shim.js',
+                    'app/assets/libs/json3/json3.min.js',
                     'app/assets/libs/angular/angular.js',
-                    'app/assets/libs/**/*.js'
+                    'app/assets/libs/angular-aria/angular-aria.js',
+                    'app/assets/libs/angular-mocks/angular-mocks.js',
+                    'app/assets/libs/angular-cookies/angular-cookies.js',
+                    'app/assets/libs/angular-animate/angular-animate.js',
+                    'app/assets/libs/angular-sanitize/angular-sanitize.js',
+                    'app/assets/libs/angular-resource/angular-resource.js',
+                    'app/assets/libs/angular-material-icons/angular-material-icons.min.js',
+                    'app/assets/libs/angular-messages/angular-messages.js',
+                    'app/assets/libs/angular-material/angular-material.js',
+                    'app/assets/libs/angular-ui-router/angular-ui-router.js',
+                    'app/assets/libs/ngInfiniteScroll/ng-infinite-scroll.js',
+                    'app/assets/libs/angular-imagefit/image-scale.js',
+                    'app/assets/libs/angular-imagefit/angular-imagefit.js',
+                    'app/assets/libs/angular-jk-rating-stars/jk-rating-stars.min.js',
+                    'app/assets/libs/angular-youtube-mb/angular-youtube-embed.js',
+                    'app/assets/libs/signalr/jquery.signalR.js',
+                    'app/assets/libs/angular-signalr-hub/signalr-hub.js'
 
                 ],
-                dest: 'app/assets/js/<%= pkg.name %>-angularbundle.js'
+                dest: 'app/assets/js/<%= pkg.name %>-angularbundle.min.js'
             }
         },
 
         uglify: {
             options: {
-                banner: '<%= banner %>',
                 report: 'min'
             },
             base: {
                 src: ['<%= concat.base.dest %>'],
-                dest: 'app/assets/js/<%= pkg.name %>-angscript.min.js'
+                dest: 'app/assets/js/<%= pkg.name %>-appbundle.min.js'
+            },
+            angular: {
+                src: ['<%= concat.build.dest %>'],
+                dest: 'app/assets/js/<%= pkg.name %>-angularbundle.min.js'
             },
             basePlugin: {
                 src: ['src/plugins/**/*.js'],
