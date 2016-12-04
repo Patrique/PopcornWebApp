@@ -53,8 +53,8 @@ module.exports = function(grunt) {
                     'app/assets/libs/angular-youtube-mb/angular-youtube-embed.js',
                     'app/assets/libs/signalr/jquery.signalR.js',
                     'app/assets/libs/angular-signalr-hub/signalr-hub.js',
-                    'app/assets/libs/azure/MobileServices.Web-1.2.5.min.js',
-                    'app/assets/libs/azure/angular-azure-mobile-service.min.js'
+                    'app/assets/libs/azure/azure-mobile-apps-client.2.0.0.js',
+                    'app/assets/libs/angular-local-storage/angular-local-storage.min.js'
                 ],
                 dest: 'app/assets/js/<%= pkg.name %>-angularbundle.min.js'
             }
@@ -116,6 +116,7 @@ module.exports = function(grunt) {
             dev: {
                 files: {
                     'index.html': [
+                        'app/assets/libs/underscore/underscore-min.js',
                         'app/assets/libs/angular-imagefit/jquery-1.11.3.min.js',
                         'app/assets/libs/es5-shim/es5-shim.js',
                         'app/assets/libs/json3/json3.min.js',
@@ -137,8 +138,8 @@ module.exports = function(grunt) {
                         'app/assets/libs/angular-youtube-mb/angular-youtube-embed.js',
                         'app/assets/libs/signalr/jquery.signalR.js',
                         'app/assets/libs/angular-signalr-hub/signalr-hub.js',
-                        'app/assets/libs/azure/MobileServices.Web-1.2.5.min.js',
-                        'app/assets/libs/azure/angular-azure-mobile-service.min.js',
+                        'app/assets/libs/azure/azure-mobile-apps-client.2.0.0.js',
+                        'app/assets/libs/angular-local-storage/angular-local-storage.min.js',
                         'app/app.js',
                         'app/app.config.js',
                         'app/**/*Module.js',

@@ -32,7 +32,7 @@
 		'player',
 		'underscore',
 		'login',
-		'azure-mobile-service.module'
+		'LocalStorageModule'
 	]);
 
 })();

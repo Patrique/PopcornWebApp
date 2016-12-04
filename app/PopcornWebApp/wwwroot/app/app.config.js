@@ -22,10 +22,13 @@
         .module('infinite-scroll')
         .value('THROTTLE_MILLISECONDS', 1000);
 
-    configure.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$mdThemingProvider'];
+    configure.$inject = ['$stateProvider', '$urlRouterProvider', '$locationProvider', '$httpProvider', '$mdThemingProvider', 'localStorageServiceProvider'];
 
-    function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider) {
-
+    function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider, localStorageServiceProvider) {
+        localStorageServiceProvider
+            .setPrefix('popcorn')
+            .setStorageType('sessionStorage')
+            .setNotify(true, true)
         $locationProvider.html5Mode(true);
 
         $mdThemingProvider.theme('docs-dark', 'default')
@@ -36,24 +39,23 @@
 
     }
 
-    runBlock.$inject = ['$rootScope', 'Azureservice', '$state'];
+    runBlock.$inject = ['$rootScope', '$state', 'localStorageService'];
 
-    function runBlock($rootScope, Azureservice, $state) {
+    function runBlock($rootScope, $state, localStorageService) {
         'use strict';
         $rootScope.previousParams;
         $rootScope.previousState;
         $rootScope.currentState;
 
         $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
-            if (!Azureservice.isLoggedIn()) {
+            $rootScope.previousParams = fromParams;
+            $rootScope.previousState = from.name;
+            $rootScope.currentState = to.name;
+            if (localStorageService.get('userId') === null || localStorageService.get('mobileServiceAuthenticationToken') === null) {
                 ev.preventDefault();
                 $state.go('login');
                 return;
             }
-
-            $rootScope.previousParams = fromParams;
-            $rootScope.previousState = from.name;
-            $rootScope.currentState = to.name;
         });
     }
 
