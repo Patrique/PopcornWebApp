@@ -39,6 +39,10 @@
                                     }
                                 });
                             });
+                    },
+                    invokeWithArgs: function(methodName) {
+                        proxy.invoke.apply(proxy, arguments)
+                            .done(function(result) { });
                     }
                 };
             };

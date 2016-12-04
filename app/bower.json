@@ -26,7 +26,8 @@
         "angular-imagefit": "~0.0.4",
         "angular-jk-rating-stars": "~1.0.3",
         "angular-youtube-mb": "~1.3.1",
-        "angular-signalr-hub": "~1.6.2"
+        "angular-signalr-hub": "~1.6.2",
+        "underscore": "~1.8.3"
     },
     "resolutions": {
         "angular": ">=1.3.*"

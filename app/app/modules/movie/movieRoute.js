@@ -13,10 +13,13 @@ angular.module('movie')
 		
 		$stateProvider
 			.state('home.movie', {
-				url:'/:id',
+				url:'/movie/:slug',
 				templateUrl: 'app/modules/movie/movie.html',
 				controller: 'MovieCtrl',
-				controllerAs: 'vm'
+				controllerAs: 'vm',
+				params: {
+					id: null
+				}
 			});
 		
 	}]);

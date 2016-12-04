@@ -31,6 +31,7 @@ module.exports = function(grunt) {
             },
             build: {
                 src: [
+                    'app/assets/libs/underscore/underscore-min.js',
                     'app/assets/libs/angular-imagefit/jquery-1.11.3.min.js',
                     'app/assets/libs/es5-shim/es5-shim.js',
                     'app/assets/libs/json3/json3.min.js',

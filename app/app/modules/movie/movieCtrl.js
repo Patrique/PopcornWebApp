@@ -13,7 +13,7 @@
         .module('movie')
         .controller('MovieCtrl', Movie);
 
-    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', 'Hub'];
+    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state'];
 
     /*
      * recommend
@@ -21,12 +21,19 @@
      * and bindable members up top.
      */
 
-    function Movie($stateParams, MovieService, $scope, $timeout, Hub) {
+    function Movie($stateParams, MovieService, $scope, $timeout, $state) {
         /*jshint validthis: true */
+        if ($stateParams.id === null) {
+            $state.go('home.trending');
+            return;
+        }
+
         var vm = this;
-        var hub = Hub(Hub.defaultServer, 'PopcornHub');
         vm.movie = {};
         vm.loaded = false;
+        vm.goToPlayer = function(movie) {
+            $state.go('home.player', { slug: vm.movie.slug, movie: vm.movie });
+        };
         MovieService.getMovie($stateParams.id).$promise.then(function(res) {
                 vm.movie = res.data.movie;
                 vm.movie.rating = Math.round(vm.movie.rating / 2);
@@ -34,7 +41,6 @@
                 return MovieService.getTMDbInfo(vm.movie.imdb_code).$promise;
             }).then(function(res) {
                 vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
-                console.log(vm.movie);
             })
             .catch(function(err) {
                 vm.loaded = true;
@@ -45,7 +51,7 @@
                 vm.loaded = true;
                 $timeout(function() {
                     $(window).trigger('resize');
-                }, 500);
+                });
             });
         }
 

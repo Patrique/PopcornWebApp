@@ -61,7 +61,7 @@
             vm.showSearch = false;
             vm.searchText = '';
             if (item !== undefined) {
-                $state.go('home.movie', { id: item.id })
+                $state.go('home.movie', { id: item.id, slug: item.slug })
             }
         };
     }

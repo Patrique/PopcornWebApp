@@ -7,7 +7,7 @@
                     <img style="border-radius: 10px;filter: drop-shadow(5px 5px 5px #000);margin-top:40px;" ng-src="{{ vm.movie.medium_cover_image }}">
                     <div layout="column" flex layout-align="space-between center" style="margin-bottom:20px;margin-top:10px;z-index:1;">
                         <h2 style="color:white;text-align: center">{{ vm.movie.title }}</h2>
-                        <md-button class="md-raised md-primary">Play</md-button>
+                        <md-button class="md-raised md-primary" ng-click="vm.goToPlayer(vm.movie)">Play</md-button>
                     </div>
                 </div>
             </md-content>
