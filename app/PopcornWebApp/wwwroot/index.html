@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="popcorn">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <base href="/">
+    <title>Popcorn</title>
+    <meta name="description" content="Watch any movie" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=yes" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/app/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/app/assets/images/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/app/assets/images/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="/app/assets/images/manifest.json">
+    <link rel="mask-icon" href="/app/assets/images/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+    <!-- injector:css -->
+    <link rel="stylesheet" href="/app/assets/css/angular-jk-rating-stars/jk-rating-stars.min.css">
+    <link rel="stylesheet" href="/app/assets/css/angular-material-icons/angular-material-icons.css">
+    <link rel="stylesheet" href="/app/assets/css/angular-material/angular-material.css">
+    <link rel="stylesheet" href="/app/assets/css/main.css">
+    <!-- endinjector -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+
+<body ng-cloak>
+    <!--Beginning-->
+    <div ui-view layout="row" layout-fill></div>
+    <!--End-->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- injector:js -->
+    <script src="/app/assets/js/popcorn-angularbundle.min.js"></script>
+    <script src="/app/assets/js/popcorn-appbundle.min.js"></script>
+    <script src="/app/assets/js/templates.js"></script>
+    <!-- endinjector -->
+</body>
+
+</html>
