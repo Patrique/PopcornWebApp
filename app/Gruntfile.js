@@ -163,11 +163,12 @@ module.exports = function (grunt) {
 		"exec",
 		"concat",
 		"ngtemplates",
+		"injector:production",
 		"concurrent",
 		"clean"
 	]);
 
 	// Development task(s).
-	grunt.registerTask('dev', ['concurrent']);
+	grunt.registerTask('dev', ['injector:dev', 'concurrent']);
 
 };
