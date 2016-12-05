@@ -232,7 +232,11 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "\n" +
     "                <div layout=\"column\" layout-align=\"space-around center\" style=\"z-index:1;\">\r" +
     "\n" +
-    "                    <youtube-video video-id=\"vm.movie.yt_trailer_code\"></youtube-video>\r" +
+    "                    <video width=\"320\" height=\"240\" controls>\r" +
+    "\n" +
+    "                        <source src=\"{{ vm.movie.trailerUrl }}\" type=\"video/mp4\">\r" +
+    "\n" +
+    "                    </video>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
