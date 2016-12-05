@@ -13,7 +13,7 @@
         .module('player')
         .controller('PlayerCtrl', Player);
 
-    Player.$inject = ['PlayerService', '$rootScope', '$stateParams', '$state', 'Hub', '$scope', '$timeout'];
+    Player.$inject = ['PlayerService', '$rootScope', '$stateParams', '$state', 'Hub', '$scope', '$timeout', 'localStorageService'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Player(PlayerService, $rootScope, $stateParams, $state, Hub, $scope, $timeout) {
+    function Player(PlayerService, $rootScope, $stateParams, $state, Hub, $scope, $timeout, localStorageService) {
         /*jshint validthis: true */
         var vm = this;
         if ($stateParams.movie === null) {
@@ -76,20 +76,28 @@
 
         vm.movie = $stateParams.movie;
 
-        var hub = Hub(Hub.defaultServer, 'PopcornHub');
-        hub.on('DownloadRateChanged', function(res) {
+        $rootScope.$on('ServerConnected', function(){
+          var torrent = _.first(_.where(vm.movie.torrents, { size_bytes: _.min(_.pluck(vm.movie.torrents, 'size_bytes')) }));
+          hub.invokeWithArgs('Download', [torrent.url, vm.movie.imdb_code], function(data){
+            console.log(data);
+          });
+        });
 
+        var hub = Hub(Hub.defaultServer, 'PopcornHub', localStorageService.get('userId'));
+        hub.on('DownloadRateChanged', function(res) {
+          console.log(res);
         });
         hub.on('DownloadProgressChanged', function(res) {
+          console.log(res);
 
         });
         hub.on('MovieUpdated', function(res) {
+          console.log(res);
 
         });
         hub.on('MovieFailed', function(res) {
+          console.log(res);
 
         });
-        var torrent = _.first(_.where(vm.movie.torrents, { size_bytes: _.min(_.pluck(vm.movie.torrents, 'size_bytes')) }));
-        //hub.invokeWithArgs('Download', torrent.url, vm.movie.imdb_code);
     }
 })();

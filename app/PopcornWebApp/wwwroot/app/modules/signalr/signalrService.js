@@ -12,13 +12,15 @@
     angular
         .module('SignalR')
         .constant('$', $)
-        .constant('backendServerUrl', 'http://popcorn.westeurope.cloudapp.azure.com')
+        .constant('backendServerUrl', 'https://server.popcorn.cool')
         .factory('Hub', ['$', '$rootScope', 'backendServerUrl', function($, $rootScope, backendServerUrl) {
-            function backendFactory(serverUrl, hubName) {
+            function backendFactory(serverUrl, hubName, qs) {
                 var connection = $.hubConnection(backendServerUrl);
                 var proxy = connection.createHubProxy(hubName);
-
-                connection.start().done(function() {});
+                proxy.qs = { 'UserId' : qs };
+                connection.start().done(function() {
+                    $rootScope.$broadcast('ServerConnected');
+                });
 
                 return {
                     on: function(eventName, callback) {
@@ -38,11 +40,23 @@
                                         callback(result);
                                     }
                                 });
+                            }).fail(function(err){
+                                console.log(err);
                             });
                     },
-                    invokeWithArgs: function(methodName) {
-                        proxy.invoke.apply(proxy, arguments)
-                            .done(function(result) { });
+                    invokeWithArgs: function(methodName, args, callback) {
+                        args.unshift(methodName);
+                        args.push(callback);
+                        proxy.invoke.apply(proxy, args)
+                            .done(function(result) {
+                                $rootScope.$apply(function() {
+                                    if (callback) {
+                                        callback(result);
+                                    }
+                                });
+                            }).fail(function(err){
+                                console.log(err);
+                            });
                     }
                 };
             };
