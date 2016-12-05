@@ -13,16 +13,22 @@
         .module('SignalR')
         .constant('$', $)
         .constant('backendServerUrl', 'https://server.popcorn.cool')
-        .factory('Hub', ['$', '$rootScope', 'backendServerUrl', function($, $rootScope, backendServerUrl) {
-            function backendFactory(serverUrl, hubName, qs) {
+        .factory('Hub', ['$', '$rootScope', 'backendServerUrl', '$q', function($, $rootScope, backendServerUrl, $q) {
+            function backendFactory(hubName, qs) {
                 var connection = $.hubConnection(backendServerUrl);
                 var proxy = connection.createHubProxy(hubName);
-                proxy.qs = { 'UserId' : qs };
-                connection.start().done(function() {
-                    $rootScope.$broadcast('ServerConnected');
-                });
+                proxy.connection.qs = { 'UserId': qs };
 
                 return {
+                    start: function() {
+                        var deferred = $q.defer();
+                        connection.start().done(function() {
+                            deferred.resolve();
+                        }).fail(function(err){
+                            deferred.reject();
+                        });
+                        return deferred.promise;
+                    },
                     on: function(eventName, callback) {
                         proxy.on(eventName, function(result) {
                             $rootScope.$apply(function() {
@@ -40,13 +46,10 @@
                                         callback(result);
                                     }
                                 });
-                            }).fail(function(err){
-                                console.log(err);
-                            });
+                            }).fail(function(err) {});
                     },
                     invokeWithArgs: function(methodName, args, callback) {
                         args.unshift(methodName);
-                        args.push(callback);
                         proxy.invoke.apply(proxy, args)
                             .done(function(result) {
                                 $rootScope.$apply(function() {
@@ -54,9 +57,7 @@
                                         callback(result);
                                     }
                                 });
-                            }).fail(function(err){
-                                console.log(err);
-                            });
+                            }).fail(function(err) {});
                     }
                 };
             };
