@@ -13,7 +13,7 @@
         .module('login')
         .controller('LoginCtrl', Login);
 
-    Login.$inject = ['LoginService', '$state', 'localStorageService', '$rootScope', 'MobileServiceClient'];
+    Login.$inject = ['LoginService', '$state', 'localStorageService', '$rootScope', 'MobileServiceClient', '$timeout'];
 
     /*
      * recommend
@@ -21,17 +21,17 @@
      * and bindable members up top.
      */
 
-    function Login(LoginService, $state, localStorageService, $rootScope, MobileServiceClient) {
+    function Login(LoginService, $state, localStorageService, $rootScope, MobileServiceClient, $timeout) {
         /*jshint validthis: true */
         var vm = this;
         vm.authenticate = function(provider) {
             var azureClient = MobileServiceClient.getMobileService();
-            azureClient.login(provider).then(function(res) {
-                localStorageService.set('userId', res.userId);
-                localStorageService.set('mobileServiceAuthenticationToken', res.mobileServiceAuthenticationToken);
-                $state.go('home.trending');
-            }).catch(function(err){
-                console.log(err);
+            $timeout(function() {
+                azureClient.login(provider).then(function(res) {
+                    localStorageService.set('userId', res.userId);
+                    localStorageService.set('mobileServiceAuthenticationToken', res.mobileServiceAuthenticationToken);
+                    $state.go('home.trending');
+                });
             });
         };
     }

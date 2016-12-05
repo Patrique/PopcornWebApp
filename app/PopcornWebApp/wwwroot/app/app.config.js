@@ -29,13 +29,16 @@
             .setPrefix('popcorn')
             .setStorageType('sessionStorage')
             .setNotify(true, true)
-        $locationProvider.html5Mode(true);
+        $locationProvider.hashPrefix('!');
 
         $mdThemingProvider.theme('docs-dark', 'default')
             .primaryPalette('orange')
             .dark();
         $urlRouterProvider
-            .otherwise('/trending');
+            .otherwise(function($injector) {
+                var $state = $injector.get("$state");
+                $state.go("login");
+            });
 
     }
 
@@ -47,11 +50,11 @@
         $rootScope.previousState;
         $rootScope.currentState;
         localStorageService.clearAll();
-        $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
+        $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
             $rootScope.previousParams = fromParams;
             $rootScope.previousState = from.name;
             $rootScope.currentState = to.name;
-            if (localStorageService.get('userId') === null || localStorageService.get('mobileServiceAuthenticationToken') === null) {
+            if (to.name !== 'login' && (localStorageService.get('userId') === null || localStorageService.get('mobileServiceAuthenticationToken') === null)) {
                 ev.preventDefault();
                 $state.go('login');
                 return;

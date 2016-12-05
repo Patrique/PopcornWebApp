@@ -13,7 +13,7 @@
         .module('player')
         .controller('PlayerCtrl', Player);
 
-    Player.$inject = ['PlayerService', '$rootScope', '$stateParams', '$state', 'Hub', '$scope', '$timeout', 'localStorageService'];
+    Player.$inject = ['PlayerService', '$rootScope', '$stateParams', '$state', 'Hub', '$scope', '$timeout', 'localStorageService', '$sce'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Player(PlayerService, $rootScope, $stateParams, $state, Hub, $scope, $timeout, localStorageService) {
+    function Player(PlayerService, $rootScope, $stateParams, $state, Hub, $scope, $timeout, localStorageService, $sce) {
         /*jshint validthis: true */
         var vm = this;
         if ($stateParams.movie === null) {
@@ -29,7 +29,27 @@
             return;
         }
 
+        vm.movie = $stateParams.movie;
+
+        vm.config = {
+            sources: [],
+            // tracks: [{
+            //     src: "http://www.videogular.com/assets/subs/pale-blue-dot.vtt",
+            //     kind: "subtitles",
+            //     srclang: "en",
+            //     label: "English",
+            //     default: ""
+            // }],
+            theme: "/app/assets/css/videogular-themes-default/videogular.css",
+            plugins: {
+                poster: vm.movie.background
+            }
+        };
+
+        vm.playerReady = false;
         vm.loaded = false;
+        vm.serverBuffer = 0;
+        vm.movieBuffer = 0;
         vm.check = {
             scale: 'best-fill',
             onLoad: function(imagecontainer, container) {},
@@ -74,30 +94,27 @@
             $state.go($rootScope.previousState, $rootScope.previousParams);
         };
 
-        vm.movie = $stateParams.movie;
-
-        $rootScope.$on('ServerConnected', function(){
-          var torrent = _.first(_.where(vm.movie.torrents, { size_bytes: _.min(_.pluck(vm.movie.torrents, 'size_bytes')) }));
-          hub.invokeWithArgs('Download', [torrent.url, vm.movie.imdb_code], function(data){
-            console.log(data);
-          });
+        var hub = Hub('PopcornHub', localStorageService.get('userId').split(':')[1]);
+        hub.on('DownloadRateChanged', function(res) {});
+        hub.on('DownloadProgressChanged', function(progress) {
+            if (progress <= 2) {
+                vm.serverBuffer = Math.round(progress * 50);
+            } else {
+                vm.serverBuffer = 100;
+            }
         });
-
-        var hub = Hub(Hub.defaultServer, 'PopcornHub', localStorageService.get('userId'));
-        hub.on('DownloadRateChanged', function(res) {
-          console.log(res);
-        });
-        hub.on('DownloadProgressChanged', function(res) {
-          console.log(res);
-
-        });
-        hub.on('MovieUpdated', function(res) {
-          console.log(res);
-
+        hub.on('MovieUpdated', function(movie) {
+            if (movie.MovieFilePath !== null && !vm.playerReady) {
+                vm.config.sources = [{ src: $sce.trustAsResourceUrl(movie.MovieFilePath), type: "video/mp4" }];
+                vm.playerReady = true;
+            }
         });
         hub.on('MovieFailed', function(res) {
-          console.log(res);
 
+        });
+        hub.start().then(function(res) {
+            var torrent = _.first(_.where(vm.movie.torrents, { size_bytes: _.min(_.pluck(vm.movie.torrents, 'size_bytes')) }));
+            hub.invokeWithArgs('Download', [torrent.url, vm.movie.imdb_code], function() {});
         });
     }
 })();

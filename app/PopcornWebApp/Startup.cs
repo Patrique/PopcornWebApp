@@ -28,15 +28,6 @@ namespace PopcornWebApp
             {
                 await next();
 
-                // If there's no available file and the request doesn't contain an extension, we're probably trying to access a page.
-                // Rewrite request to use app root
-                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
-                {
-                    context.Request.Path = "/"; // Put your Angular root page here 
-                    context.Response.StatusCode = 200; // Make sure we update the status code, otherwise it returns 404
-                    await next();
-                }
-
                 if (!context.Request.IsHttps)
                 {
                     var withHttps = "https://" + context.Request.Host + context.Request.Path;

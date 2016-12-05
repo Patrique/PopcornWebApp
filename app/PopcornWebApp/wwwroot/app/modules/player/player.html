@@ -1,12 +1,12 @@
 <div layout="column" flex>
-    <md-content style="background: black;min-height: 100%;" flex layout-fill layout="column" layout-align="center center" ng-show="vm.loaded">
+    <md-content ng-if="!vm.playerReady" style="background: black;min-height: 100%;" flex layout-fill layout="column" layout-align="center center" ng-show="vm.loaded">
         <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.background}}" style="opacity:0.3;">
         <div layout="column" layout-align="space-around center" style="padding:40px;width:100%;">
             <div layout="column" layout-align="center center" style="z-index:1;width:100%;">
                 <h1 class="md-display-3" style="color: white;text-align: center;">{{ vm.movie.title }}</h1>
                 <h2 class="md-display-1" style="color:white;">Buffering</h2>
-                <md-progress-linear style="max-width:50%;" class="md-warn" md-mode="buffer" value="20" md-buffer-value="30"></md-progress-linear>
-                <h3 class="md-headline" style="color:white;">5%</h3>
+                <md-progress-linear style="max-width:50%;" class="md-warn" md-mode="buffer" value="{{ vm.movieBuffer }}" md-buffer-value="{{ vm.serverBuffer }}"></md-progress-linear>
+                <h3 class="md-headline" style="color:white;">{{ vm.serverBuffer }} %</h3>
                 <md-button class="md-accent" ng-click="vm.goPrevious();">Cancel</md-button>
             </div>
         </div>
@@ -14,4 +14,25 @@
     <div ng-show="!vm.loaded" layout="row" flex layout-align="center center">
         <md-progress-circular md-diameter="96"></md-progress-circular>
     </div>
+    <md-content ng-if="vm.playerReady" class="videogular-container" flex layout-fill layout="column" layout-align="center center">
+        <videogular vg-theme="vm.config.theme" vg-auto-play="true">
+            <vg-media vg-src="vm.config.sources" vg-tracks="vm.config.tracks">
+            </vg-media>
+            <vg-controls vg-autohide="true" vg-autohide-time="2000">
+                <vg-play-pause-button></vg-play-pause-button>
+                <vg-time-display>{{ currentTime | date:'HH:mm:ss':'+0000' }}</vg-time-display>
+                <vg-scrub-bar>
+                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                </vg-scrub-bar>
+                <vg-time-display>{{ timeLeft | date:'HH:mm:ss':'+0000' }}</vg-time-display>
+                <vg-volume>
+                    <vg-mute-button></vg-mute-button>
+                    <vg-volume-bar></vg-volume-bar>
+                </vg-volume>
+                <vg-fullscreen-button></vg-fullscreen-button>
+            </vg-controls>
+            <vg-overlay-play></vg-overlay-play>
+            <vg-poster vg-url='vm.config.plugins.poster'></vg-poster>
+        </videogular>
+    </md-content>
 </div>

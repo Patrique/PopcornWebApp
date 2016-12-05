@@ -53,7 +53,12 @@ module.exports = function(grunt) {
                     'app/assets/libs/signalr/jquery.signalR.js',
                     'app/assets/libs/angular-signalr-hub/signalr-hub.js',
                     'app/assets/libs/azure/azure-mobile-apps-client.2.0.0.js',
-                    'app/assets/libs/angular-local-storage/angular-local-storage.min.js'
+                    'app/assets/libs/angular-local-storage/angular-local-storage.min.js',
+                    'app/assets/libs/videogular/videogular.min.js',
+                    'app/assets/libs/videogular-buffering/vg-buffering.min.js',
+                    'app/assets/libs/videogular-controls/vg-controls.min.js',
+                    'app/assets/libs/videogular-overlay-play/vg-overlay-play.min.js',
+                    'app/assets/libs/videogular-poster/vg-poster.min.js'
                 ],
                 dest: 'app/assets/js/<%= pkg.name %>-angularbundle.min.js'
             }
@@ -138,6 +143,11 @@ module.exports = function(grunt) {
                         'app/assets/libs/angular-signalr-hub/signalr-hub.js',
                         'app/assets/libs/azure/azure-mobile-apps-client.2.0.0.js',
                         'app/assets/libs/angular-local-storage/angular-local-storage.min.js',
+                        'app/assets/libs/videogular/videogular.min.js',
+                        'app/assets/libs/videogular-buffering/vg-buffering.min.js',
+                        'app/assets/libs/videogular-controls/vg-controls.min.js',
+                        'app/assets/libs/videogular-overlay-play/vg-overlay-play.min.js',
+                        'app/assets/libs/videogular-poster/vg-poster.min.js',
                         'app/app.js',
                         'app/app.config.js',
                         'app/**/*Module.js',
