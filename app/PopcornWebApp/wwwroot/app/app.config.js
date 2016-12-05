@@ -46,7 +46,7 @@
         $rootScope.previousParams;
         $rootScope.previousState;
         $rootScope.currentState;
-
+        localStorageService.clearAll();
         $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
             $rootScope.previousParams = fromParams;
             $rootScope.previousState = from.name;

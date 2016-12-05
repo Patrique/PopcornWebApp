@@ -13,7 +13,7 @@
         .module('login')
         .controller('LoginCtrl', Login);
 
-    Login.$inject = ['LoginService', '$state', 'localStorageService', '$rootScope'];
+    Login.$inject = ['LoginService', '$state', 'localStorageService', '$rootScope', 'MobileServiceClient'];
 
     /*
      * recommend
@@ -21,11 +21,11 @@
      * and bindable members up top.
      */
 
-    function Login(LoginService, $state, localStorageService, $rootScope) {
+    function Login(LoginService, $state, localStorageService, $rootScope, MobileServiceClient) {
         /*jshint validthis: true */
         var vm = this;
         vm.authenticate = function(provider) {
-            var azureClient = new WindowsAzure.MobileServiceClient('https://popcornapi.azurewebsites.net');
+            var azureClient = MobileServiceClient.getMobileService();
             azureClient.login(provider).then(function(res) {
                 localStorageService.set('userId', res.userId);
                 localStorageService.set('mobileServiceAuthenticationToken', res.mobileServiceAuthenticationToken);

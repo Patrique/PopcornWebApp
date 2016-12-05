@@ -27,12 +27,12 @@
 		'movie',
 		'angular-imagefit',
 		'jkAngularRatingStars',
-		'youtube-embed',
 		'SignalR',
 		'player',
 		'underscore',
 		'login',
-		'LocalStorageModule'
+		'LocalStorageModule',
+		'azure'
 	]);
 
 })();

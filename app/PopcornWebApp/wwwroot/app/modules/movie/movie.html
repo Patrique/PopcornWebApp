@@ -42,7 +42,9 @@
             <md-content style="background: black;" layout="column" layout-align="center center" layout-fill>
                 <img imagefit imagefit-option="vm.check" imageonload imgloaded="vm.imageLoaded()" ng-src="{{vm.movie.large_screenshot_image2}}" style="opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);">
                 <div layout="column" layout-align="space-around center" style="z-index:1;">
-                    <youtube-video video-id="vm.movie.yt_trailer_code"></youtube-video>
+                    <video width="320" height="240" controls>
+                        <source src="{{ vm.movie.trailerUrl }}" type="video/mp4">
+                    </video>
                 </div>
             </md-content>
         </md-tab>

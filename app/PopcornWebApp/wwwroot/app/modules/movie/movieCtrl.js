@@ -13,7 +13,7 @@
         .module('movie')
         .controller('MovieCtrl', Movie);
 
-    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state'];
+    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state', 'MobileServiceClient'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Movie($stateParams, MovieService, $scope, $timeout, $state) {
+    function Movie($stateParams, MovieService, $scope, $timeout, $state, MobileServiceClient) {
         /*jshint validthis: true */
         if ($stateParams.id === null) {
             $state.go('home.trending');
@@ -41,6 +41,15 @@
                 return MovieService.getTMDbInfo(vm.movie.imdb_code).$promise;
             }).then(function(res) {
                 vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
+                var service = MobileServiceClient.getMobileService();
+                service.invokeApi('Movie', {
+                  method: 'GET',
+                  parameters: {
+                    ytCode: vm.movie.yt_trailer_code
+                  }
+                }).then(function(data){
+                  vm.movie.trailerUrl = data.result;
+                });
             })
             .catch(function(err) {
                 vm.loaded = true;
