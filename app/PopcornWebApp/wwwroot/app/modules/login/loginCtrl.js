@@ -29,12 +29,9 @@
             azureClient.login(provider).then(function(res) {
                 localStorageService.set('userId', res.userId);
                 localStorageService.set('mobileServiceAuthenticationToken', res.mobileServiceAuthenticationToken);
-                if($rootScope.previousState !== null){
-                    $state.go($rootScope.previousState);
-                }
-                else{
-                    $state.go('home.trending');
-                }
+                $state.go('home.trending');
+            }).catch(function(err){
+                console.log(err);
             });
         };
     }
