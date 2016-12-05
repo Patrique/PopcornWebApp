@@ -13,7 +13,7 @@
         .module('SignalR')
         .constant('$', $)
         .constant('backendServerUrl', 'https://server.popcorn.cool')
-        .factory('Hub', ['$', '$rootScope', 'backendServerUrl', '$q', function($, $rootScope, backendServerUrl, $q) {
+        .factory('Hub', ['$', '$rootScope', 'backendServerUrl', '$q', '$timeout', function($, $rootScope, backendServerUrl, $q, $timeout) {
             function backendFactory(hubName, qs) {
                 var connection = $.hubConnection(backendServerUrl);
                 var proxy = connection.createHubProxy(hubName);
@@ -24,14 +24,17 @@
                         var deferred = $q.defer();
                         connection.start().done(function() {
                             deferred.resolve();
-                        }).fail(function(err){
+                        }).fail(function(err) {
                             deferred.reject();
                         });
                         return deferred.promise;
                     },
+                    stop: function() {
+                        connection.stop();
+                    },
                     on: function(eventName, callback) {
                         proxy.on(eventName, function(result) {
-                            $rootScope.$apply(function() {
+                            $timeout(function() {
                                 if (callback) {
                                     callback(result);
                                 }
@@ -41,7 +44,7 @@
                     invoke: function(methodName, callback) {
                         proxy.invoke(methodName)
                             .done(function(result) {
-                                $rootScope.$apply(function() {
+                                $timeout(function() {
                                     if (callback) {
                                         callback(result);
                                     }
@@ -52,7 +55,7 @@
                         args.unshift(methodName);
                         proxy.invoke.apply(proxy, args)
                             .done(function(result) {
-                                $rootScope.$apply(function() {
+                                $timeout(function() {
                                     if (callback) {
                                         callback(result);
                                     }

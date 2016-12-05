@@ -13,7 +13,7 @@
         .module('movie')
         .controller('MovieCtrl', Movie);
 
-    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state', 'MobileServiceClient'];
+    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state', 'MobileServiceClient', '$sce'];
 
     /*
      * recommend
@@ -21,7 +21,7 @@
      * and bindable members up top.
      */
 
-    function Movie($stateParams, MovieService, $scope, $timeout, $state, MobileServiceClient) {
+    function Movie($stateParams, MovieService, $scope, $timeout, $state, MobileServiceClient, $sce) {
         /*jshint validthis: true */
         if ($stateParams.id === null) {
             $state.go('home.trending');
@@ -34,6 +34,15 @@
         vm.goToPlayer = function(movie) {
             $state.go('home.player', { slug: vm.movie.slug, movie: vm.movie });
         };
+
+        vm.config = {
+            sources: [],
+            theme: "/app/assets/css/videogular-themes-default/videogular.css",
+            plugins: {
+                poster: vm.movie.background
+            }
+        };
+
         MovieService.getMovie($stateParams.id).$promise.then(function(res) {
                 vm.movie = res.data.movie;
                 vm.movie.rating = Math.round(vm.movie.rating / 2);
@@ -43,12 +52,13 @@
                 vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
                 var service = MobileServiceClient.getMobileService();
                 service.invokeApi('Movie', {
-                  method: 'GET',
-                  parameters: {
-                    ytCode: vm.movie.yt_trailer_code
-                  }
-                }).then(function(data){
-                  vm.movie.trailerUrl = data.result;
+                    method: 'GET',
+                    parameters: {
+                        ytCode: vm.movie.yt_trailer_code
+                    }
+                }).then(function(data) {
+                    vm.movie.trailerUrl = data.result;
+                    vm.config.sources = [{ src: $sce.trustAsResourceUrl(vm.movie.trailerUrl), type: "video/mp4" }];
                 });
             })
             .catch(function(err) {

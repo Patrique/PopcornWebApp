@@ -98,3 +98,18 @@ md-tab-content > div {
     margin: auto;
     overflow: hidden;
 }
+
+videogular stop-button {
+    display: table-cell;
+    width: 50px;
+    vertical-align: middle;
+    text-align: center;
+    cursor: pointer;
+}
+
+videogular stop-button a,
+videogular stop-button a:hover,
+videogular stop-button a:visited {
+    color: white;
+    text-decoration: none;
+}

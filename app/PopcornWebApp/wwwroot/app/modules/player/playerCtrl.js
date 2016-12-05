@@ -46,6 +46,7 @@
             }
         };
 
+        var movieSources = [];
         vm.playerReady = false;
         vm.loaded = false;
         vm.serverBuffer = 0;
@@ -91,28 +92,43 @@
         };
 
         vm.goPrevious = function() {
-            $state.go($rootScope.previousState, $rootScope.previousParams);
+            $state.go('home.movie', vm.movie);
         };
+
+        $rootScope.$on('StopMovie', function() {
+            vm.goPrevious();
+        });
+
+        $rootScope.$on('HomePlayerExited', function() {
+            hub.stop();
+        });
 
         var hub = Hub('PopcornHub', localStorageService.get('userId').split(':')[1]);
         hub.on('DownloadRateChanged', function(res) {});
+
+        var buffered = false;
         hub.on('DownloadProgressChanged', function(progress) {
             if (progress <= 2) {
                 vm.serverBuffer = Math.round(progress * 50);
             } else {
                 vm.serverBuffer = 100;
             }
-        });
-        hub.on('MovieUpdated', function(movie) {
-            if (movie.MovieFilePath !== null && !vm.playerReady) {
-                vm.config.sources = [{ src: $sce.trustAsResourceUrl(movie.MovieFilePath), type: "video/mp4" }];
+
+            if (!buffered && vm.serverBuffer === 100) {
+                buffered = true;
+                vm.config.sources = movieSources;
                 vm.playerReady = true;
             }
         });
-        hub.on('MovieFailed', function(res) {
-
+        hub.on('MovieUpdated', function(movie) {
+            if (movie.MovieFilePath !== null) {
+                movieSources = [{ src: $sce.trustAsResourceUrl(movie.MovieFilePath), type: "video/mp4" }];
+            }
         });
-        hub.start().then(function(res) {
+        hub.on('MovieFailed', function(res) {
+          console.log(res);
+        });
+        hub.start().then(function() {
             var torrent = _.first(_.where(vm.movie.torrents, { size_bytes: _.min(_.pluck(vm.movie.torrents, 'size_bytes')) }));
             hub.invokeWithArgs('Download', [torrent.url, vm.movie.imdb_code], function() {});
         });

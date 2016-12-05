@@ -59,6 +59,10 @@
                 $state.go('login');
                 return;
             }
+
+            if(from.name === 'home.player'){
+                $rootScope.$broadcast('HomePlayerExited');
+            }
         });
     }
 
