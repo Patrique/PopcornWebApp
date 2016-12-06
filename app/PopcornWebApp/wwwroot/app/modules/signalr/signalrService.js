@@ -14,10 +14,10 @@
         .constant('$', $)
         .constant('backendServerUrl', 'https://server.popcorn.cool')
         .factory('Hub', ['$', '$rootScope', 'backendServerUrl', '$q', '$timeout', function($, $rootScope, backendServerUrl, $q, $timeout) {
-            function backendFactory(hubName, qs) {
+            function backendFactory(hubName, imdbCode) {
                 var connection = $.hubConnection(backendServerUrl);
                 var proxy = connection.createHubProxy(hubName);
-                proxy.connection.qs = { 'UserId': qs };
+                proxy.connection.qs = { 'ImdbCode': imdbCode };
 
                 return {
                     start: function() {

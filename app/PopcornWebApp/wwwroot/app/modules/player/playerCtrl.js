@@ -109,7 +109,7 @@
             hub.stop();
         });
 
-        var hub = Hub('PopcornHub', localStorageService.get('userId').split(':')[1]);
+        var hub = Hub('PopcornHub', vm.movie.imdb_code);
         hub.on('DownloadRateChanged', function(res) {});
 
         var buffered = false;
