@@ -14,8 +14,8 @@
     <div ng-show="!vm.loaded" layout="row" flex layout-align="center center">
         <md-progress-circular md-diameter="96"></md-progress-circular>
     </div>
-    <md-content ng-if="vm.playerReady" class="videogular-container" flex layout-fill layout="column" layout-align="center center">
-        <videogular vg-theme="vm.config.theme" vg-auto-play="true">
+    <md-content ng-if="vm.playerReady" class="videogular-container" flex layout-fill layout="column" layout-align="center center" style="background-color: black;">
+        <videogular vg-theme="vm.config.theme" vg-player-ready="vm.onPlayerReady($API)">
             <vg-media vg-src="vm.config.sources" vg-tracks="vm.config.tracks">
             </vg-media>
             <vg-controls vg-autohide="true" vg-autohide-time="2000">

@@ -22,16 +22,16 @@ namespace PopcornWebApp
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {           
-            // Route all unknown requests to app root
+        {
             app.Use(async (context, next) =>
             {
                 await next();
 
-                if (!context.Request.IsHttps)
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
                 {
-                    var withHttps = "https://" + context.Request.Host + context.Request.Path;
-                    context.Response.Redirect(withHttps);
+                    context.Request.Path = "/index.html"; // Put your Angular root page here 
+                    context.Response.StatusCode = 200; // Make sure we update the status code, otherwise it returns 404
+                    await next();
                 }
             });
 

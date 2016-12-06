@@ -28,7 +28,13 @@
             $state.go('home.trending')
             return;
         }
-
+        vm.API = null;
+        vm.onPlayerReady = function(API) {
+            vm.API = API;
+            $timeout(function() {
+                vm.API.play();
+            });
+        };
         vm.movie = $stateParams.movie;
 
         vm.config = {
@@ -126,7 +132,7 @@
             }
         });
         hub.on('MovieFailed', function(res) {
-          console.log(res);
+            console.log(res);
         });
         hub.start().then(function() {
             var torrent = _.first(_.where(vm.movie.torrents, { size_bytes: _.min(_.pluck(vm.movie.torrents, 'size_bytes')) }));

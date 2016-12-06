@@ -29,7 +29,7 @@
             .setPrefix('popcorn')
             .setStorageType('sessionStorage')
             .setNotify(true, true)
-        $locationProvider.hashPrefix('!');
+        $locationProvider.html5Mode(true);
 
         $mdThemingProvider.theme('docs-dark', 'default')
             .primaryPalette('orange')

@@ -226,19 +226,45 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "\n" +
     "        <md-tab label=\"Trailer\" layout=\"column\" flex>\r" +
     "\n" +
-    "            <md-content style=\"background: black;\" layout=\"column\" layout-align=\"center center\" layout-fill>\r" +
+    "            <md-content class=\"videogular-container\" flex layout-fill layout=\"column\" layout-align=\"center center\">\r" +
     "\n" +
-    "                <img imagefit imagefit-option=\"vm.check\" imageonload imgloaded=\"vm.imageLoaded()\" ng-src=\"{{vm.movie.large_screenshot_image2}}\" style=\"opacity:0.5;-webkit-filter: blur(3px);filter: blur(3px);\">\r" +
+    "                <videogular vg-theme=\"vm.config.theme\">\r" +
     "\n" +
-    "                <div layout=\"column\" layout-align=\"space-around center\" style=\"z-index:1;\">\r" +
+    "                    <vg-media vg-src=\"vm.config.sources\">\r" +
     "\n" +
-    "                    <video controls ng-if=\"vm.movie.trailerUrl !== undefined\">\r" +
+    "                    </vg-media>\r" +
     "\n" +
-    "                        <source ng-src=\"{{ vm.movie.trailerUrl }}\" type=\"video/mp4\">\r" +
+    "                    <vg-controls vg-autohide=\"true\" vg-autohide-time=\"2000\">\r" +
     "\n" +
-    "                    </video>\r" +
+    "                        <vg-play-pause-button></vg-play-pause-button>\r" +
     "\n" +
-    "                </div>\r" +
+    "                        <vg-time-display>{{ currentTime | date:'HH:mm:ss':'+0000' }}</vg-time-display>\r" +
+    "\n" +
+    "                        <vg-scrub-bar>\r" +
+    "\n" +
+    "                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>\r" +
+    "\n" +
+    "                        </vg-scrub-bar>\r" +
+    "\n" +
+    "                        <vg-time-display>{{ timeLeft | date:'HH:mm:ss':'+0000' }}</vg-time-display>\r" +
+    "\n" +
+    "                        <vg-volume>\r" +
+    "\n" +
+    "                            <vg-mute-button></vg-mute-button>\r" +
+    "\n" +
+    "                            <vg-volume-bar></vg-volume-bar>\r" +
+    "\n" +
+    "                        </vg-volume>\r" +
+    "\n" +
+    "                        <vg-fullscreen-button></vg-fullscreen-button>\r" +
+    "\n" +
+    "                    </vg-controls>\r" +
+    "\n" +
+    "                    <vg-overlay-play></vg-overlay-play>\r" +
+    "\n" +
+    "                    <vg-poster vg-url='vm.config.plugins.poster'></vg-poster>\r" +
+    "\n" +
+    "                </videogular>\r" +
     "\n" +
     "            </md-content>\r" +
     "\n" +
@@ -308,7 +334,7 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
   $templateCache.put('app/modules/player/player.html',
     "<div layout=\"column\" flex>\r" +
     "\n" +
-    "    <md-content style=\"background: black;min-height: 100%;\" flex layout-fill layout=\"column\" layout-align=\"center center\" ng-show=\"vm.loaded\">\r" +
+    "    <md-content ng-if=\"!vm.playerReady\" style=\"background: black;min-height: 100%;\" flex layout-fill layout=\"column\" layout-align=\"center center\" ng-show=\"vm.loaded\">\r" +
     "\n" +
     "        <img imagefit imagefit-option=\"vm.check\" imageonload imgloaded=\"vm.imageLoaded()\" ng-src=\"{{vm.movie.background}}\" style=\"opacity:0.3;\">\r" +
     "\n" +
@@ -320,9 +346,9 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "\n" +
     "                <h2 class=\"md-display-1\" style=\"color:white;\">Buffering</h2>\r" +
     "\n" +
-    "                <md-progress-linear style=\"max-width:50%;\" class=\"md-warn\" md-mode=\"buffer\" value=\"20\" md-buffer-value=\"30\"></md-progress-linear>\r" +
+    "                <md-progress-linear style=\"max-width:50%;\" class=\"md-warn\" md-mode=\"buffer\" value=\"{{ vm.movieBuffer }}\" md-buffer-value=\"{{ vm.serverBuffer }}\"></md-progress-linear>\r" +
     "\n" +
-    "                <h3 class=\"md-headline\" style=\"color:white;\">5%</h3>\r" +
+    "                <h3 class=\"md-headline\" style=\"color:white;\">{{ vm.serverBuffer }} %</h3>\r" +
     "\n" +
     "                <md-button class=\"md-accent\" ng-click=\"vm.goPrevious();\">Cancel</md-button>\r" +
     "\n" +
@@ -337,6 +363,50 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "        <md-progress-circular md-diameter=\"96\"></md-progress-circular>\r" +
     "\n" +
     "    </div>\r" +
+    "\n" +
+    "    <md-content ng-if=\"vm.playerReady\" class=\"videogular-container\" flex layout-fill layout=\"column\" layout-align=\"center center\" style=\"background-color: black;\">\r" +
+    "\n" +
+    "        <videogular vg-theme=\"vm.config.theme\" vg-player-ready=\"vm.onPlayerReady($API)\">\r" +
+    "\n" +
+    "            <vg-media vg-src=\"vm.config.sources\" vg-tracks=\"vm.config.tracks\">\r" +
+    "\n" +
+    "            </vg-media>\r" +
+    "\n" +
+    "            <vg-controls vg-autohide=\"true\" vg-autohide-time=\"2000\">\r" +
+    "\n" +
+    "                <vg-play-pause-button></vg-play-pause-button>\r" +
+    "\n" +
+    "                <vg-time-display>{{ currentTime | date:'HH:mm:ss':'+0000' }}</vg-time-display>\r" +
+    "\n" +
+    "                <vg-scrub-bar>\r" +
+    "\n" +
+    "                    <vg-scrub-bar-current-time></vg-scrub-bar-current-time>\r" +
+    "\n" +
+    "                </vg-scrub-bar>\r" +
+    "\n" +
+    "                <vg-time-display>{{ timeLeft | date:'HH:mm:ss':'+0000' }}</vg-time-display>\r" +
+    "\n" +
+    "                <vg-volume>\r" +
+    "\n" +
+    "                    <vg-mute-button></vg-mute-button>\r" +
+    "\n" +
+    "                    <vg-volume-bar></vg-volume-bar>\r" +
+    "\n" +
+    "                </vg-volume>\r" +
+    "\n" +
+    "                <stop-button></stop-button>\r" +
+    "\n" +
+    "                <vg-fullscreen-button></vg-fullscreen-button>\r" +
+    "\n" +
+    "            </vg-controls>\r" +
+    "\n" +
+    "            <vg-overlay-play></vg-overlay-play>\r" +
+    "\n" +
+    "            <vg-poster vg-url='vm.config.plugins.poster'></vg-poster>\r" +
+    "\n" +
+    "        </videogular>\r" +
+    "\n" +
+    "    </md-content>\r" +
     "\n" +
     "</div>\r" +
     "\n"
