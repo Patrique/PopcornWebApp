@@ -51,7 +51,7 @@
             }).then(function(res) {
                 vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
                 var service = MobileServiceClient.getMobileService();
-                service.invokeApi('Movie', {
+                service.invokeApi('Movie/GetTrailer', {
                     method: 'GET',
                     parameters: {
                         ytCode: vm.movie.yt_trailer_code

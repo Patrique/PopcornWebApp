@@ -430,9 +430,11 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "\n" +
     "                        <h3 style=\"font-weight:bold;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;\">{{ movie.title }}</h3>\r" +
     "\n" +
-    "                        <md-button class=\"md-icon-button md-48\" aria-label=\"Favorite\">\r" +
+    "                        <md-button ng-click=\"vm.toggleLike(movie)\" class=\"md-icon-button md-48\" aria-label=\"Favorite\">\r" +
     "\n" +
-    "                            <md-icon md-font-set=\"material-icons\" style=\"color:white;\">favorite</md-icon>\r" +
+    "                            <md-icon md-font-set=\"material-icons\" ng-if=\"movie.like !== true\" style=\"color:white;\">favorite</md-icon>\r" +
+    "\n" +
+    "                            <md-icon md-font-set=\"material-icons\" ng-if=\"movie.like\" style=\"color:red;\">favorite</md-icon>\r" +
     "\n" +
     "                        </md-button>\r" +
     "\n" +
@@ -468,9 +470,11 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "\n" +
     "                        <h3 style=\"font-weight:bold;word-break:break-word;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;\">{{ movie.title }}</h3>\r" +
     "\n" +
-    "                        <md-button class=\"md-icon-button md-accent md-48\" aria-label=\"Favorite\">\r" +
+    "                        <md-button ng-click=\"vm.toggleLike(movie)\" class=\"md-icon-button md-48\" aria-label=\"Favorite\">\r" +
     "\n" +
-    "                            <md-icon md-font-set=\"material-icons\" style=\"color:white;\">favorite</md-icon>\r" +
+    "                            <md-icon md-font-set=\"material-icons\" ng-if=\"movie.like !== true\" style=\"color:white;\">favorite</md-icon>\r" +
+    "\n" +
+    "                            <md-icon md-font-set=\"material-icons\" ng-if=\"movie.like\" style=\"color:red;\">favorite</md-icon>\r" +
     "\n" +
     "                        </md-button>\r" +
     "\n" +
@@ -506,9 +510,11 @@ angular.module('popcorn').run(['$templateCache', function($templateCache) {
     "\n" +
     "                        <h3 style=\"font-weight:bold;word-break:break-word;white-space:nowrap;text-overflow:ellipsis;margin:0px 0px 0px 10px;overflow:hidden;\">{{ movie.title }}</h3>\r" +
     "\n" +
-    "                        <md-button class=\"md-icon-button md-48\" aria-label=\"Favorite\">\r" +
+    "                        <md-button ng-click=\"vm.toggleLike(movie)\" class=\"md-icon-button md-48\" aria-label=\"Favorite\">\r" +
     "\n" +
-    "                            <md-icon md-font-set=\"material-icons\" style=\"color:white;\">favorite</md-icon>\r" +
+    "                            <md-icon md-font-set=\"material-icons\" ng-if=\"movie.like !== true\" style=\"color:white;\">favorite</md-icon>\r" +
+    "\n" +
+    "                            <md-icon md-font-set=\"material-icons\" ng-if=\"movie.like\" style=\"color:red;\">favorite</md-icon>\r" +
     "\n" +
     "                        </md-button>\r" +
     "\n" +

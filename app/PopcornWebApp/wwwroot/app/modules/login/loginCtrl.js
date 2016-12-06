@@ -30,7 +30,13 @@
                 azureClient.login(provider).then(function(res) {
                     localStorageService.set('userId', res.userId);
                     localStorageService.set('mobileServiceAuthenticationToken', res.mobileServiceAuthenticationToken);
-                    $state.go('home.trending');
+                    azureClient.invokeApi('UserInfo', {method: 'GET'}).then(function(data){
+                        localStorageService.set('firstName', data.result.firstName);
+                        localStorageService.set('lastName', data.result.lastName);
+                        localStorageService.set('profilePictureUri', data.result.profilePictureUri);
+                        localStorageService.set('profileId', data.result.id);
+                        $state.go('home.trending');
+                    });
                 });
             });
         };
