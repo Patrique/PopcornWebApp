@@ -1,4 +1,4 @@
-app/PopcornWebApp/wwwroot/node_modules/**/*
-app/PopcornWebApp/wwwroot/bower_components/**/*
+PopcornWebApp/wwwroot/node_modules/**/*
+PopcornWebApp/wwwroot/bower_components/**/*
 **/bin/
 **/obj/

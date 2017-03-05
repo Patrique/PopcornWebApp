@@ -20,7 +20,7 @@
     function SearchService($resource) {
         return {
             search: function(query) {
-                return $resource('https://yts.ag/api/v2/list_movies.json').get({ query_term: query });
+                return $resource('https://popcornapi.azurewebsites.net/api/movies?page=1').get({ query_term: query });
             }
         };
     }

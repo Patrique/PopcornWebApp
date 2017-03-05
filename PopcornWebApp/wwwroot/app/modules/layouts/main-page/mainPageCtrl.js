@@ -44,10 +44,10 @@
         vm.querySearch = function(query) {
             var deferred = $q.defer();
             SearchService.search(query).$promise.then(function(res) {
-                if (res.data.movie_count === 0) {
+                if (res.totalMovies === 0) {
                     deferred.resolve([]);
                 } else {
-                    deferred.resolve(res.data.movies);
+                    deferred.resolve(res.movies);
                 }
             });
             return deferred.promise;
@@ -61,7 +61,7 @@
             vm.showSearch = false;
             vm.searchText = '';
             if (item !== undefined) {
-                $state.go('home.movie', { id: item.id, slug: item.slug })
+                $state.go('home.movie', { imdb_code: item.imdb_code, slug: item.slug })
             }
         };
     }
