@@ -13,7 +13,7 @@
         .module('movie')
         .controller('MovieCtrl', Movie);
 
-    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state', 'MobileServiceClient', '$sce'];
+    Movie.$inject = ['$stateParams', 'MovieService', '$scope', '$timeout', '$state', '$sce'];
 
     /*
      * recommend
@@ -21,9 +21,9 @@
      * and bindable members up top.
      */
 
-    function Movie($stateParams, MovieService, $scope, $timeout, $state, MobileServiceClient, $sce) {
+    function Movie($stateParams, MovieService, $scope, $timeout, $state, $sce) {
         /*jshint validthis: true */
-        if ($stateParams.id === null) {
+        if ($stateParams.imdb_code === null) {
             $state.go('home.trending');
             return;
         }
@@ -43,27 +43,15 @@
             }
         };
 
-        MovieService.getMovie($stateParams.id).$promise.then(function(res) {
-                vm.movie = res.data.movie;
-                vm.movie.rating = Math.round(vm.movie.rating / 2);
-                vm.movie.genre = vm.movie.genres.join(', ');
-                return MovieService.getTMDbInfo(vm.movie.imdb_code).$promise;
-            }).then(function(res) {
-                vm.movie.background = 'https://image.tmdb.org/t/p/original' + res.movie_results[0].backdrop_path;
-                var service = MobileServiceClient.getMobileService();
-                service.invokeApi('Movie/GetTrailer', {
-                    method: 'GET',
-                    parameters: {
-                        ytCode: vm.movie.yt_trailer_code
-                    }
-                }).then(function(data) {
-                    vm.movie.trailerUrl = data.result;
-                    vm.config.sources = [{ src: $sce.trustAsResourceUrl(vm.movie.trailerUrl), type: "video/mp4" }];
-                });
-            })
-            .catch(function(err) {
-                vm.loaded = true;
-            });
+        MovieService.getMovie($stateParams.imdb_code).$promise.then(function(res) {
+          vm.movie = res.data.movie;
+          vm.movie.rating = Math.round(vm.movie.rating / 2);
+          vm.movie.genre = vm.movie.genres.join(', ');
+          MovieService.getTrailer(vm.movie.yt_trailer_code).$promise.then(function(data) {
+              vm.movie.trailerUrl = data.result;
+              vm.config.sources = [{ src: $sce.trustAsResourceUrl(vm.movie.trailerUrl), type: "video/mp4" }];
+          });
+        });
 
         vm.imageLoaded = function() {
             $scope.$apply(function() {

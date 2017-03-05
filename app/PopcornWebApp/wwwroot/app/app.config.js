@@ -12,10 +12,6 @@
 
     angular
         .module('popcorn')
-        .constant('AzureMobileServiceClient', {
-            API_URL: 'https://popcornapi.azurewebsites.net/',
-            API_KEY: 'B17B3E4ED4632B9E63F37392A86BB767F5D20010412F68A993E97CC918716F13',
-        })
         .config(configure)
         .run(runBlock);
     angular
@@ -27,7 +23,7 @@
     function configure($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, $mdThemingProvider, localStorageServiceProvider) {
         localStorageServiceProvider
             .setPrefix('popcorn')
-            .setStorageType('sessionStorage')
+            .setStorageType('localStorage')
             .setNotify(true, true)
         $locationProvider.html5Mode(true);
 
@@ -37,7 +33,7 @@
         $urlRouterProvider
             .otherwise(function($injector) {
                 var $state = $injector.get("$state");
-                $state.go("login");
+                $state.go("home.popular");
             });
 
     }
@@ -49,16 +45,10 @@
         $rootScope.previousParams;
         $rootScope.previousState;
         $rootScope.currentState;
-        localStorageService.clearAll();
         $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
             $rootScope.previousParams = fromParams;
             $rootScope.previousState = from.name;
             $rootScope.currentState = to.name;
-            if (to.name !== 'login' && (localStorageService.get('userId') === null || localStorageService.get('mobileServiceAuthenticationToken') === null)) {
-                ev.preventDefault();
-                $state.go('login');
-                return;
-            }
 
             if(from.name === 'home.player'){
                 $rootScope.$broadcast('HomePlayerExited');

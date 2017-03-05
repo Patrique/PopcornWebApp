@@ -20,10 +20,10 @@
     function Movie($resource) {
         return {
             getMovie: function(id) {
-                return $resource('https://yts.ag/api/v2/movie_details.json').get({ movie_id: id, with_images: 'true', with_cast: 'true' });
+                return $resource('https://popcornapi.azurewebsites.net/api/movies/:id').get({ id: id });
             },
-            getTMDbInfo: function(id) {
-                return $resource('https://api.themoviedb.org/3/find/:id').get({ api_key: 'a21fe922d3bac6654e93450e9a18af1c', id: id, external_source: 'imdb_id' });
+            getTrailer: function(yt_trailer_code){
+                return $resource('https://popcornapi.azurewebsites.net/api/trailer/:yt_trailer_code').get({yt_trailer_code: yt_trailer_code});
             }
         };
     }

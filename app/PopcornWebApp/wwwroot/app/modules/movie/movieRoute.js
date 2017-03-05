@@ -18,7 +18,7 @@ angular.module('movie')
 				controller: 'MovieCtrl',
 				controllerAs: 'vm',
 				params: {
-					id: null
+					imdb_code: null
 				}
 			});
 		

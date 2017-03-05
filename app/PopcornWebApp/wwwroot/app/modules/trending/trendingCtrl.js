@@ -13,7 +13,7 @@
         .module('trending')
         .controller('TrendingCtrl', Trending);
 
-    Trending.$inject = ['TrendingService', '$rootScope', 'MobileServiceClient', 'localStorageService'];
+    Trending.$inject = ['TrendingService', '$rootScope', 'localStorageService'];
 
     /*
      * recommend
@@ -21,16 +21,11 @@
      * and bindable members up top.
      */
 
-    function Trending(TrendingService, $rootScope, MobileServiceClient, localStorageService) {
+    function Trending(TrendingService, $rootScope, localStorageService) {
         /*jshint validthis: true */
         var vm = this;
         vm.page = 0;
         vm.movies = [];
-        var azureClient = MobileServiceClient.getMobileService();
-        var moviesInBdd;
-        azureClient.invokeApi('Movie/GetMovies', { method: 'GET' }).then(function(data) {
-            moviesInBdd = data.result;
-        });
 
         var loadMovies = function(pageNumber) {
             TrendingService.getMovies(pageNumber).$promise.then(function(res) {
@@ -39,10 +34,11 @@
                 vm.page = res.data.page_number;
                 for (var i = 0; i < res.data.movies.length; i++) {
                     var movie = res.data.movies[i];
-                    var match = _.findWhere(moviesInBdd, { TmdbId: movie.imdb_code });
-                    if (match !== undefined) {
-                        movie.like = match.Liked;
+                    var storedMovie = localStorageService.get(movie.imdb_code);
+                    if(storedMovie !== undefined && storedMovie !== null){
+                        movie.like = storedMovie.like;
                     }
+                    
                     vm.movies.push(movie);
                 }
                 $rootScope.$broadcast('loaded');
@@ -64,13 +60,13 @@
                 movie.like = !movie.like;
             }
 
-            var movieToPost = {
-                UserProfileId: localStorageService.get('profileId'),
-                TmdbId: movie.imdb_code,
-                Liked: movie.like,
-                Watched: false
-            }
-            azureClient.invokeApi('Movie/ToggleLike', { body: movieToPost });
+            var movieToStore = {
+                imdb_code: movie.imdb_code,
+                like: movie.like,
+                watched: false
+            };
+
+            localStorageService.set(movie.imdb_code, movieToStore);
         };
     }
 })();
