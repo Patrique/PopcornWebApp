@@ -43,12 +43,12 @@
             }
         };
 
-        MovieService.getMovie($stateParams.imdb_code).$promise.then(function(res) {
-          vm.movie = res.data.movie;
+        MovieService.getMovie($stateParams.imdb_code).$promise.then(function(movie) {
+          vm.movie = movie;
           vm.movie.rating = Math.round(vm.movie.rating / 2);
           vm.movie.genre = vm.movie.genres.join(', ');
           MovieService.getTrailer(vm.movie.yt_trailer_code).$promise.then(function(data) {
-              vm.movie.trailerUrl = data.result;
+              vm.movie.trailerUrl = data.trailer_url;
               vm.config.sources = [{ src: $sce.trustAsResourceUrl(vm.movie.trailerUrl), type: "video/mp4" }];
           });
         });

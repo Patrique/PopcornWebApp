@@ -28,11 +28,9 @@
         vm.movies = [];
         var loadMovies = function(pageNumber) {
             RecentService.getMovies(pageNumber).$promise.then(function(res) {
-                if (vm.page === res.data.page_number)
-                    return;
-                vm.page = res.data.page_number;
-                for (var i = 0; i < res.data.movies.length; i++) {
-                    var movie = res.data.movies[i];
+                vm.page++;
+                for (var i = 0; i < res.movies.length; i++) {
+                    var movie = res.movies[i];
                     var storedMovie = localStorageService.get(movie.imdb_code);
                     if(storedMovie !== undefined && storedMovie !== null){
                         movie.like = storedMovie.like;
