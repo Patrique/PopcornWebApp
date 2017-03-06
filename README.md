@@ -14,6 +14,10 @@ You can browse https://popcornwebapp.azurewebsites.net/
 
 It relies on the privately own Popcorn API I have developed (sources [here](https://github.com/bbougot/PopcornApi))
 
+# Build
+
+Use **npm install** and **grunt build**
+
 # Screenshots
 
 ![Home](https://github.com/bbougot/PopcornWebApp/blob/master/Screenshots/Screen1.png)
